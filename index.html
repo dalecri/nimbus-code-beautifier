@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nimbus — Code Beautifier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple: #7c6af7;
+    --purple-hover: #9485f9;
+    --surface: #111114;
+    --surface2: #1a1a1e;
+    --surface3: #222228;
+    --border: #2a2a30;
+    --border2: #3a3a42;
+    --text: #e2e0dc;
+    --text2: #8a8a96;
+    --text3: #4e4e5a;
+    --bg: #0d0d10;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
+
+  #app {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 270px 1fr;
+    height: 100vh;
+  }
+
+  /* ─── TOPBAR ─── */
+  #topbar {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    gap: 10px;
+  }
+
+  .logo {
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.4px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .logo-orb {
+    width: 9px; height: 9px;
+    background: radial-gradient(circle at 35% 35%, #a99aff, #5c4be0);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(124,106,247,0.6);
+  }
+
+  .spacer { flex: 1; }
+
+  .export-btns { display: flex; gap: 5px; }
+
+  .tbtn {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 5px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.12s;
+    letter-spacing: 0.2px;
+  }
+  .tbtn:hover { background: var(--surface3); color: var(--text); border-color: #555; }
+  .tbtn.accent {
+    background: var(--purple);
+    border-color: var(--purple);
+    color: #fff;
+  }
+  .tbtn.accent:hover { background: var(--purple-hover); border-color: var(--purple-hover); }
+
+  /* ─── SIDEBAR ─── */
+  #sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 14px 0 30px;
+  }
+
+  #sidebar::-webkit-scrollbar { width: 3px; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  .slabel {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 0 15px;
+    margin: 16px 0 7px;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 15px;
+  }
+
+  .rlabel {
+    font-size: 11.5px;
+    color: var(--text2);
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+
+  .row select, .row input[type="text"] {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 5px;
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 5px 8px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.12s;
+    min-width: 0;
+  }
+  .row select:hover, .row input[type="text"]:hover { border-color: var(--border2); }
+  .row select:focus, .row input[type="text"]:focus { border-color: var(--purple); }
+
+  .row input[type="range"] {
+    flex: 1;
+    accent-color: var(--purple);
+    cursor: pointer;
+  }
+
+  .rval {
+    font-size: 10.5px;
+    color: var(--text3);
+    min-width: 22px;
+    text-align: right;
+  }
+
+  .sep {
+    height: 1px;
+    background: var(--border);
+    margin: 10px 15px;
+  }
+
+  /* themes */
+  .theme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 0 15px;
+  }
+
+  .tchip {
+    padding: 5px 6px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.12s;
+    text-align: center;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tchip:hover { filter: brightness(1.15); transform: translateY(-1px); }
+  .tchip.on { border-color: var(--purple) !important; }
+
+  /* bg swatches */
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0 15px;
+  }
+
+  .sw {
+    width: 22px; height: 22px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.1s, border-color 0.1s;
+    flex-shrink: 0;
+  }
+  .sw:hover { transform: scale(1.18); }
+  .sw.on { border-color: #fff; }
+
+  .sw-custom {
+    width: 22px; height: 22px;
+    border-radius: 5px;
+    border: 1.5px dashed var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    position: relative;
+    color: var(--text3);
+    font-size: 15px;
+    line-height: 1;
+  }
+  .sw-custom input[type="color"] {
+    position: absolute; inset: 0;
+    opacity: 0; width: 100%; height: 100%;
+    cursor: pointer; border: none;
+  }
+
+  /* toggles */
+  .trow {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 5px 15px;
+  }
+  .tlabel { font-size: 11.5px; color: var(--text2); }
+
+  .tog { position: relative; width: 34px; height: 19px; cursor: pointer; }
+  .tog input { display: none; }
+  .tog-track {
+    position: absolute; inset: 0;
+    background: var(--surface3); border-radius: 9.5px;
+    transition: background 0.18s;
+  }
+  .tog input:checked + .tog-track { background: var(--purple); }
+  .tog-thumb {
+    position: absolute; top: 3.5px; left: 3.5px;
+    width: 12px; height: 12px;
+    background: #fff; border-radius: 50%;
+    transition: transform 0.18s; pointer-events: none;
+  }
+  .tog input:checked ~ .tog-thumb { transform: translateX(15px); }
+
+  /* ─── CANVAS ─── */
+  #canvas-area {
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+
+  #editor-wrap {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .etabs {
+    display: flex; align-items: center;
+    padding: 0 15px; height: 34px; gap: 4px;
+  }
+  .etab {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 10px; border-radius: 4px;
+    color: var(--text3); cursor: default;
+    background: var(--surface3);
+    color: var(--text2);
+  }
+
+  #code-input {
+    width: 100%; height: 155px;
+    background: var(--bg);
+    border: none; outline: none; resize: none;
+    color: #b8b6b0;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; line-height: 1.7;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    tab-size: 2;
+  }
+
+  /* ─── PREVIEW ─── */
+  #preview {
+    flex: 1; overflow: auto;
+    display: flex; align-items: center; justify-content: center;
+    padding: 36px;
+    background: #080810;
+    position: relative;
+  }
+
+  #preview::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.013) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.013) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+
+  /* ─── CODE CARD ─── */
+  #code-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 720px;
+    width: 100%;
+    transition: border-radius 0.15s, max-width 0.15s;
+  }
+
+  #card-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(135deg, #7c6af7, #4facfe);
+    transition: background 0.25s;
+  }
+
+  #card-inner {
+    position: relative; z-index: 1;
+    padding: 28px;
+    transition: padding 0.1s;
+  }
+
+  /* dots removed */
+
+  #code-block {
+    border-radius: 8px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    position: relative;
+    background: rgba(0,0,0,0.38);
+  }
+
+  #code-block::-webkit-scrollbar { height: 3px; }
+  #code-block::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  #lang-badge {
+    position: absolute; top: 10px; right: 12px;
+    font-size: 9.5px; font-weight: 700;
+    letter-spacing: 1.1px; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 4px;
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.4);
+  }
+
+  #code-lines {
+    display: flex; gap: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; line-height: 1.75;
+    white-space: pre; tab-size: 2;
+  }
+
+  #line-nums {
+    color: rgba(255,255,255,0.2);
+    text-align: right;
+    padding-right: 18px;
+    user-select: none; flex-shrink: 0;
+  }
+
+  #code-out { flex: 1; overflow: hidden; }
+
+  /* ─── TOAST ─── */
+  #toast {
+    position: fixed; bottom: 22px; right: 22px;
+    background: var(--purple); color: #fff;
+    font-size: 12px; font-weight: 500;
+    padding: 9px 17px; border-radius: 7px;
+    opacity: 0; transform: translateY(6px);
+    transition: all 0.22s; pointer-events: none;
+    z-index: 9999; font-family: 'DM Sans', sans-serif;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="logo">
+      <span class="logo-orb"></span>
+      Nimbus
+    </div>
+    <div class="spacer"></div>
+    <div class="export-btns">
+      <button class="tbtn" onclick="doExport('png')">PNG</button>
+      <button class="tbtn" onclick="doExport('jpeg')">JPEG</button>
+      <button class="tbtn" onclick="doExport('pdf')">PDF</button>
+      <button class="tbtn accent" onclick="doExport('png')">↓ Export</button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+
+    <div class="slabel">Language</div>
+    <div class="row">
+      <select id="lang" onchange="onLangChange()">
+        <option value="javascript">JavaScript</option>
+        <option value="typescript">TypeScript</option>
+        <option value="python">Python</option>
+        <option value="rust">Rust</option>
+        <option value="go">Go</option>
+        <option value="java">Java</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="css">CSS</option>
+        <option value="html">HTML</option>
+        <option value="sql">SQL</option>
+        <option value="shell">Bash / Shell</option>
+        <option value="yaml">YAML</option>
+        <option value="json">JSON</option>
+        <option value="ruby">Ruby</option>
+        <option value="php">PHP</option>
+        <option value="swift">Swift</option>
+        <option value="kotlin">Kotlin</option>
+        <option value="r">R</option>
+        <option value="scala">Scala</option>
+      </select>
+    </div>
+
+    <div class="sep"></div>
+    <div class="slabel">Theme</div>
+    <div class="theme-grid" id="theme-grid"></div>
+
+    <div class="sep"></div>
+    <div class="slabel">Background</div>
+    <div class="swatches" id="swatches"></div>
+
+    <div class="sep"></div>
+    <div class="slabel">Layout</div>
+
+    <div class="row">
+      <span class="rlabel">Padding</span>
+      <input type="range" min="8" max="80" value="28" id="r-pad" oninput="setPad(this.value)">
+      <span class="rval" id="v-pad">28</span>
+    </div>
+    <div class="row">
+      <span class="rlabel">Width</span>
+      <input type="range" min="320" max="960" value="720" id="r-width" oninput="setWidth(this.value)">
+      <span class="rval" id="v-width">720</span>
+    </div>
+    <div class="row">
+      <span class="rlabel">Radius</span>
+      <input type="range" min="0" max="28" value="12" id="r-rad" oninput="setRadius(this.value)">
+      <span class="rval" id="v-rad">12</span>
+    </div>
+    <div class="row">
+      <span class="rlabel">Font</span>
+      <input type="range" min="9" max="18" value="13" id="r-font" oninput="setFont(this.value)">
+      <span class="rval" id="v-font">13</span>
+    </div>
+
+
+    <div class="sep"></div>
+    <div class="slabel">Options</div>
+
+    <div class="trow">
+      <span class="tlabel">Line numbers</span>
+      <label class="tog">
+        <input type="checkbox" id="t-lines" checked onchange="setLines()">
+        <div class="tog-track"></div>
+        <div class="tog-thumb"></div>
+      </label>
+    </div>
+    <div class="trow">
+      <span class="tlabel">Language badge</span>
+      <label class="tog">
+        <input type="checkbox" id="t-badge" checked onchange="setBadge()">
+        <div class="tog-track"></div>
+        <div class="tog-thumb"></div>
+      </label>
+    </div>
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div id="canvas-area">
+    <div id="editor-wrap">
+      <div class="etabs"><div class="etab">Paste Code</div></div>
+      <textarea id="code-input" spellcheck="false" placeholder="// Paste your code here..." oninput="renderCode()">async function fetchUserData(userId) {
+  const cache = new Map();
+
+  if (cache.has(userId)) {
+    return cache.get(userId);
+  }
+
+  try {
+    const response = await fetch(`/api/users/${userId}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    cache.set(userId, data);
+    return data;
+  } catch (err) {
+    console.error('Failed to fetch user:', err);
+    throw err;
+  }
+}</textarea>
+    </div>
+
+    <div id="preview">
+      <div id="code-card">
+        <div id="card-bg"></div>
+        <div id="card-inner">
+          <div id="code-block">
+            <span id="lang-badge">JS</span>
+            <div id="code-lines">
+              <div id="line-nums"></div>
+              <div id="code-out"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+const THEMES = [
+  { name:'One Dark',    id:'atom-one-dark',       bg:'#282c34', chip:'#1a1d23', chipFg:'#e5c07b' },
+  { name:'Dracula',     id:'dracula',              bg:'#282a36', chip:'#1e2029', chipFg:'#ff79c6' },
+  { name:'Night Owl',   id:'night-owl',            bg:'#011627', chip:'#010f1a', chipFg:'#7fdbca' },
+  { name:'Tokyo Night', id:'tokyo-night-dark',     bg:'#1a1b26', chip:'#10111a', chipFg:'#7aa2f7' },
+  { name:'Stack Dark',  id:'stackoverflow-dark',   bg:'#1c1b1b', chip:'#111010', chipFg:'#e38c3a' },
+  { name:'Nord',        id:'nord',                 bg:'#2e3440', chip:'#242932', chipFg:'#88c0d0' },
+  { name:'Monokai',     id:'monokai',              bg:'#272822', chip:'#1a1a16', chipFg:'#f92672' },
+  { name:'GitHub Dark', id:'github-dark',          bg:'#0d1117', chip:'#050708', chipFg:'#58a6ff' },
+  { name:'Obsidian',    id:'obsidian',             bg:'#282b2e', chip:'#1a1c1e', chipFg:'#93c763' },
+  { name:'Synthwave',   id:'base16/synth-midnight-terminal-dark', bg:'#20003e', chip:'#140027', chipFg:'#f77dae' },
+  { name:'VS Code',     id:'vs2015',               bg:'#1e1e1e', chip:'#141414', chipFg:'#569cd6' },
+  { name:'One Light',   id:'atom-one-light',       bg:'#fafafa', chip:'#e2e2e2', chipFg:'#4078f2' },
+];
+
+const LANG_BADGE = {
+  javascript:'JS', typescript:'TS', python:'PY', rust:'RS', go:'GO',
+  java:'JAVA', c:'C', cpp:'C++', css:'CSS', html:'HTML', sql:'SQL',
+  shell:'SH', yaml:'YML', json:'JSON', ruby:'RB', php:'PHP',
+  swift:'SW', kotlin:'KT', r:'R', scala:'SC'
+};
+
+const BG_PRESETS = [
+  'linear-gradient(135deg,#7c6af7,#4facfe)',
+  'linear-gradient(135deg,#f7706a,#f5af19)',
+  'linear-gradient(135deg,#0fd850,#f9f047)',
+  'linear-gradient(135deg,#fc5c7d,#6a3093)',
+  'linear-gradient(135deg,#43c6ac,#191654)',
+  'linear-gradient(135deg,#f953c6,#b91d73)',
+  'linear-gradient(135deg,#1a1a2e,#16213e)',
+  'linear-gradient(135deg,#d4d4d4,#ffffff)',
+];
+
+let activeTheme = THEMES[0];
+let activeBg = BG_PRESETS[0];
+
+/* ── Build theme chips ── */
+function buildThemes() {
+  const grid = document.getElementById('theme-grid');
+  THEMES.forEach((t, i) => {
+    const c = document.createElement('div');
+    c.className = 'tchip' + (i === 0 ? ' on' : '');
+    c.style.background = t.chip;
+    c.style.color = t.chipFg;
+    c.style.borderColor = i === 0 ? '#7c6af7' : 'transparent';
+    c.textContent = t.name;
+    c.onclick = () => applyTheme(t, c);
+    grid.appendChild(c);
+  });
+}
+
+function applyTheme(t, el) {
+  activeTheme = t;
+  document.querySelectorAll('.tchip').forEach(c => { c.classList.remove('on'); c.style.borderColor = 'transparent'; });
+  el.classList.add('on'); el.style.borderColor = '#7c6af7';
+  document.getElementById('hljs-theme').href =
+    `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${t.id}.min.css`;
+  document.getElementById('code-block').style.background = t.bg + 'cc';
+  renderCode();
+}
+
+/* ── Build bg swatches ── */
+function buildSwatches() {
+  const wrap = document.getElementById('swatches');
+  BG_PRESETS.forEach((bg, i) => {
+    const s = document.createElement('div');
+    s.className = 'sw' + (i === 0 ? ' on' : '');
+    s.style.background = bg;
+    s.onclick = () => pickBg(bg, s);
+    wrap.appendChild(s);
+  });
+  const custom = document.createElement('div');
+  custom.className = 'sw-custom';
+  custom.title = 'Custom color';
+  custom.innerHTML = `+<input type="color" value="#7c6af7" oninput="customBg(this.value)">`;
+  wrap.appendChild(custom);
+}
+
+function pickBg(bg, el) {
+  activeBg = bg;
+  document.querySelectorAll('.sw').forEach(s => s.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('card-bg').style.background = bg;
+}
+
+function customBg(val) {
+  activeBg = val;
+  document.querySelectorAll('.sw').forEach(s => s.classList.remove('on'));
+  document.getElementById('card-bg').style.background = val;
+}
+
+/* ── Render code ── */
+function renderCode() {
+  const raw = document.getElementById('code-input').value || '';
+  const lang = document.getElementById('lang').value;
+  const lines = raw.split('\n');
+  document.getElementById('line-nums').textContent = lines.map((_, i) => i + 1).join('\n');
+  try {
+    const r = hljs.highlight(raw, { language: lang, ignoreIllegals: true });
+    document.getElementById('code-out').innerHTML = r.value;
+  } catch(e) {
+    document.getElementById('code-out').textContent = raw;
+  }
+}
+
+/* ── Controls ── */
+function onLangChange() {
+  const l = document.getElementById('lang').value;
+  document.getElementById('lang-badge').textContent = LANG_BADGE[l] || l.slice(0,4).toUpperCase();
+  renderCode();
+}
+function setPad(v)    { document.getElementById('v-pad').textContent = v;    document.getElementById('card-inner').style.padding = v + 'px'; }
+function setWidth(v)  { document.getElementById('v-width').textContent = v;  document.getElementById('code-card').style.maxWidth = v + 'px'; }
+function setRadius(v) { document.getElementById('v-rad').textContent = v;    document.getElementById('code-card').style.borderRadius = v + 'px'; document.getElementById('code-block').style.borderRadius = Math.max(0,v-4)+'px'; }
+function setFont(v)   { document.getElementById('v-font').textContent = v;   document.getElementById('code-lines').style.fontSize = v + 'px'; }
+
+function setLines()   { document.getElementById('line-nums').style.display = document.getElementById('t-lines').checked ? 'block' : 'none'; }
+function setBadge()   { document.getElementById('lang-badge').style.display = document.getElementById('t-badge').checked ? 'inline-block' : 'none'; }
+
+/* ── Export ── */
+async function doExport(fmt) {
+  const card = document.getElementById('code-card');
+
+  if (fmt === 'pdf') {
+    const style = document.createElement('style');
+    style.id = 'print-style';
+    style.textContent = `
+      @media print {
+        body * { visibility: hidden; }
+        #preview, #preview * { visibility: visible; }
+        #preview { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #080810 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    `;
+    document.head.appendChild(style);
+    window.print();
+    setTimeout(() => style.remove(), 1000);
+    return;
+  }
+
+  try {
+    const canvas = await html2canvas(card, { backgroundColor: null, scale: 2, useCORS: true, allowTaint: true, logging: false });
+    const mime = fmt === 'jpeg' ? 'image/jpeg' : 'image/png';
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL(mime, 0.96);
+    a.download = `nimbus-snippet.${fmt}`;
+    a.click();
+    toast(`${fmt.toUpperCase()} saved!`);
+  } catch(e) {
+    toast('Export failed — try a different format');
+  }
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+/* ── Init ── */
+buildThemes();
+buildSwatches();
+document.getElementById('card-bg').style.background = activeBg;
+document.getElementById('code-block').style.background = activeTheme.bg + 'cc';
+renderCode();
+</script>
+</body>
+</html>
