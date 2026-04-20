@@ -1,0 +1,514 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Nimbus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100dvh; width: 100%;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+/* ── 3D FLIP MECHANICS ── */
+#viewport {
+  perspective: 1500px;
+  width: 100%; height: 100%;
+  overflow: hidden;
+}
+
+#flipper {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#flipper.flipped {
+  transform: rotateY(-180deg);
+}
+
+#front, #back {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ── PREVIEW FRONT ── */
+#front {
+  display: flex; align-items: center; justify-content: center;
+  visibility: visible;
+  transition: visibility 0s 0s;
+}
+#flipper.flipped #front {
+  visibility: hidden;
+  transition: visibility 0s 0.35s; /* Hides halfway through flip */
+}
+
+#code-card {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border-radius: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* When exporting, shrink wrapper to capture just the card */
+#code-card.is-exporting {
+  position: relative; inset: auto; height: auto; display: block; 
+}
+#code-card.is-exporting #card-inner { margin: 0 auto; }
+
+#card-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(135deg,#7c6af7,#4facfe);
+  transition: background 0.3s;
+}
+
+#card-inner {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 720px;
+  padding: 28px;
+}
+
+#code-block {
+  border-radius: 9px; padding: 24px;
+  overflow-x: auto; position: relative;
+  background: #282c34; min-height: 60px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+  transition: border-radius 0.15s, background 0.2s, color 0.2s;
+}
+#code-block::-webkit-scrollbar { height: 3px; }
+#code-block::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+#code-lines {
+  display: flex; gap: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 14px; line-height: 1.6;
+  white-space: pre; tab-size: 2; min-height: 1.6em;
+}
+
+#line-nums {
+  color: rgba(255,255,255,0.2); text-align: right;
+  padding-right: 16px; user-select: none; flex-shrink: 0; pointer-events: none;
+}
+
+#code-rendered { flex: 1; overflow: hidden; outline: none; white-space: pre; pointer-events: none; color: #abb2bf;}
+
+/* The Single Front Button */
+#flip-fab {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  background: rgba(16,14,32,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; padding: 12px 28px; border-radius: 99px;
+  font-weight: 600; font-size: 14px; letter-spacing: 0.5px;
+  cursor: pointer; z-index: 10;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#flip-fab:hover { background: rgba(16,14,32,0.8); transform: translateX(-50%) scale(1.05); }
+
+/* ── EDITOR BACK (LIGHT UI SETTINGS) ── */
+#back {
+  transform: rotateY(180deg);
+  background: #f4f4f5; /* Light app background */
+  color: #1e293b;
+  display: flex; flex-direction: column;
+  visibility: hidden;
+  transition: visibility 0s 0.35s;
+}
+#flipper.flipped #back {
+  visibility: visible;
+  transition: visibility 0s 0s;
+}
+
+.edit-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px; flex-shrink: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding-top: env(safe-area-inset-top, 16px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+.edit-header button {
+  background: none; border: none; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif;
+  cursor: pointer; padding: 8px; margin: -8px; border-radius: 8px;
+  color: #64748b; transition: all 0.2s; display: flex; align-items: center; gap: 4px;
+}
+.edit-header button:hover { color: #0f172a; background: #f1f5f9; }
+.edit-header .title { font-weight: 800; font-size: 14px; letter-spacing: 0.05em; color: #0f172a; }
+
+.edit-content {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 24px; padding-bottom: 80px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Light Settings Cards */
+.settings-group {
+  margin-bottom: 28px;
+  max-width: 600px; margin-left: auto; margin-right: auto;
+}
+.sg-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px; padding: 24px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Segmented Control (Themes) */
+.seg-control {
+  display: flex; background: #f1f5f9; border-radius: 99px; padding: 4px;
+  margin-bottom: 24px;
+}
+.seg-btn {
+  flex: 1; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+  color: #64748b; padding: 12px 0; border-radius: 99px; border: none;
+  background: transparent; cursor: pointer; transition: all 0.2s ease;
+}
+.seg-btn.active {
+  background: #fff; color: #0f172a; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Sliders */
+.slider-group { margin-bottom: 20px; }
+.slider-header {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #64748b;
+  margin-bottom: 12px;
+}
+.slider-val { color: #0f172a; }
+input[type="range"] {
+  width: 100%; -webkit-appearance: none; appearance: none;
+  height: 6px; background: #e2e8f0; border-radius: 3px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 24px; height: 24px; background: #475569;
+  border-radius: 50%; border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer;
+  transition: transform 0.1s;
+}
+input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.15); }
+
+/* Language Select */
+.lang-select {
+  width: 100%; appearance: none; -webkit-appearance: none;
+  background: #f8fafc url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2364748b" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>') no-repeat right 12px center;
+  background-size: 14px; border: 1px solid #e2e8f0; color: #0f172a; border-radius: 12px; font-size: 14px;
+  font-family: 'Inter', sans-serif; font-weight: 600; padding: 12px 14px; outline: none; cursor: pointer; margin-bottom: 16px;
+}
+
+/* Textarea */
+#main-editor {
+  width: 100%; min-height: 180px;
+  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 16px; font-family: 'Space Mono', monospace; font-size: 13px; line-height: 1.6;
+  color: #334155; resize: vertical; tab-size: 2; white-space: pre; outline: none;
+}
+#main-editor:focus { border-color: #94a3b8; background: #fff; }
+
+/* Giant Save Button */
+.btn-save {
+  width: 100%; background: #1e293b; color: #fff; border: none;
+  border-radius: 16px; padding: 16px; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.05em; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.btn-save:hover { background: #0f172a; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+.btn-save:active { transform: translateY(0); }
+
+/* ── CAMERA FLASH OVERLAY ── */
+#shutter-flash {
+  position: fixed; inset: 0; background: #fff; z-index: 9999;
+  opacity: 0; pointer-events: none; transition: opacity 0.1s;
+}
+#shutter-flash.fire { opacity: 1; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; top: 40px; left: 50%; transform: translate(-50%, -10px);
+  background: #1e293b; color: #fff; font-size: 13px; font-weight: 600;
+  padding: 12px 24px; border-radius: 99px; letter-spacing: 0.05em;
+  opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 768px) {
+  #stage { padding: 0; }
+  .edit-content { padding: 16px; padding-bottom: 60px; }
+  .sg-card { padding: 20px; border-radius: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div id="viewport">
+  <div id="flipper">
+
+    <!-- FRONT: PREVIEW STAGE -->
+    <div id="front">
+      <!-- Full Bleed Background Container -->
+      <div id="code-card">
+        <div id="card-bg"></div>
+        <div id="card-inner">
+          <div id="code-block">
+            <span id="lang-badge">JS</span>
+            <div id="code-lines">
+              <div id="line-nums"></div>
+              <div id="code-rendered"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Single Floating Edit Button -->
+      <button id="flip-fab" onclick="openEditor()">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+        Edit Settings
+      </button>
+    </div>
+
+    <!-- BACK: LIGHT UI SETTINGS -->
+    <div id="back">
+      <div class="edit-header">
+        <button onclick="closeEditor(false)">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          BACK
+        </button>
+        <span class="title">CONTROLS</span>
+        <div style="width:70px"></div> <!-- Spacer to center title -->
+      </div>
+      
+      <div class="edit-content">
+        
+        <!-- Style Group -->
+        <div class="settings-group">
+          <div class="sg-card">
+            <!-- 4 Themes Segmented Control -->
+            <div class="seg-control" id="theme-tabs">
+              <button class="seg-btn active" onclick="setTheme('atom-one-dark', this, '#282c34', '#abb2bf')">TERMINAL</button>
+              <button class="seg-btn" onclick="setTheme('atom-one-light', this, '#fafafa', '#383a42')">PAPER</button>
+              <button class="seg-btn" onclick="setTheme('dracula', this, '#282a36', '#f8f8f2')">DUNGEON</button>
+              <button class="seg-btn" onclick="setTheme('tokyo-night-dark', this, '#1a1b26', '#a9b1d6')">NEON</button>
+            </div>
+
+            <!-- Sliders -->
+            <div class="slider-group">
+              <div class="slider-header"><span>SCALE</span> <span class="slider-val" id="v-font">14PX</span></div>
+              <input type="range" min="10" max="24" value="14" oninput="updateSetting('font', this.value)">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header"><span>PADDING</span> <span class="slider-val" id="v-pad">28PX</span></div>
+              <input type="range" min="16" max="80" value="28" oninput="updateSetting('pad', this.value)">
+            </div>
+            <div class="slider-group">
+              <div class="slider-header"><span>WIDTH</span> <span class="slider-val" id="v-width">720PX</span></div>
+              <input type="range" min="320" max="960" value="720" oninput="updateSetting('width', this.value)">
+            </div>
+            <div class="slider-group" style="margin-bottom: 0;">
+              <div class="slider-header"><span>RADIUS</span> <span class="slider-val" id="v-rad">9PX</span></div>
+              <input type="range" min="0" max="32" value="9" oninput="updateSetting('rad', this.value)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Group -->
+        <div class="settings-group">
+          <div class="sg-card">
+            <select id="lang" class="lang-select" onchange="onLangChange()">
+              <option value="javascript">JavaScript</option>
+              <option value="typescript">TypeScript</option>
+              <option value="python">Python</option>
+              <option value="rust">Rust</option>
+              <option value="go">Go</option>
+              <option value="css">CSS</option>
+              <option value="html">HTML</option>
+              <option value="swift">Swift</option>
+            </select>
+            <textarea id="main-editor" spellcheck="false"></textarea>
+          </div>
+        </div>
+
+        <!-- Export Action -->
+        <button class="btn-save" onclick="doSaveAndExport('png')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          SAVE SNAPSHOT
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Flash effect for export mask -->
+<div id="shutter-flash"></div>
+<div id="toast"></div>
+
+<script>
+const DEFAULT_CODE = `function initializeDrone() {
+  const systems = ['Nav', 'Camera', 'Motors'];
+  
+  systems.forEach(sys => {
+    console.log(\`[Boot] Checking \${sys}...\`);
+  });
+
+  return {
+    status: 'Ready',
+    battery: 98,
+    takeoff: () => console.log('Liftoff sequence initiated.')
+  };
+}`;
+
+let rawCode = DEFAULT_CODE;
+
+/* ── DOM ELEMENTS ── */
+const flipper = document.getElementById('flipper');
+const editor = document.getElementById('main-editor');
+const codeBlock = document.getElementById('code-block');
+const cardInner = document.getElementById('card-inner');
+const rendered = document.getElementById('code-rendered');
+const lineNums = document.getElementById('line-nums');
+
+/* ── RENDER ENGINE ── */
+function renderCode() {
+  const lang = document.getElementById('lang').value;
+  const lines = rawCode.split('\n');
+  lineNums.textContent = lines.map((_, i) => i + 1).join('\n');
+  try {
+    const r = hljs.highlight(rawCode, { language: lang, ignoreIllegals: true });
+    rendered.innerHTML = r.value;
+  } catch(e) {
+    rendered.textContent = rawCode;
+  }
+}
+
+/* ── FLIP EDITOR ── */
+function openEditor() {
+  editor.value = rawCode;
+  flipper.classList.add('flipped');
+}
+
+function closeEditor(save) {
+  if (save) {
+    rawCode = editor.value;
+    renderCode();
+  }
+  flipper.classList.remove('flipped');
+}
+
+// Editor Tab Key Support
+editor.addEventListener('keydown', e => {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const s = editor.selectionStart;
+    editor.value = editor.value.substring(0, s) + '  ' + editor.value.substring(editor.selectionEnd);
+    editor.selectionStart = editor.selectionEnd = s + 2;
+  }
+});
+
+/* ── CONTROLS ── */
+function onLangChange() {
+  // Update visually if desired
+}
+
+function setTheme(themeId, btnEl, bgColor, textColor) {
+  document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  
+  document.getElementById('hljs-theme').href = 
+    `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeId}.min.css`;
+  
+  codeBlock.style.background = bgColor;
+  rendered.style.color = textColor;
+  
+  setTimeout(renderCode, 50);
+}
+
+function updateSetting(type, val) {
+  if (type === 'pad') {
+    document.getElementById('v-pad').textContent = val + 'PX';
+    cardInner.style.padding = val + 'px';
+  } else if (type === 'font') {
+    document.getElementById('v-font').textContent = val + 'PX';
+    document.getElementById('code-lines').style.fontSize = val + 'px';
+    editor.style.fontSize = val + 'px';
+  } else if (type === 'rad') {
+    document.getElementById('v-rad').textContent = val + 'PX';
+    codeBlock.style.borderRadius = val + 'px';
+  } else if (type === 'width') {
+    document.getElementById('v-width').textContent = val + 'PX';
+    cardInner.style.maxWidth = val + 'px';
+  }
+}
+
+/* ── AUTO-FLIP & EXPORT ── */
+async function doSaveAndExport(fmt) {
+  // 1. Commit changes and flip to front
+  closeEditor(true);
+  
+  // 2. Wait for the 3D flip animation to finish
+  await new Promise(r => setTimeout(r, 750));
+  
+  const flash = document.getElementById('shutter-flash');
+  const card = document.getElementById('code-card');
+  const fab = document.getElementById('flip-fab');
+  
+  // 3. Hide floating button and fire flash
+  fab.style.display = 'none';
+  flash.classList.add('fire');
+  
+  await new Promise(r => setTimeout(r, 150));
+
+  // 4. Isolate the card for a tight crop
+  const exportWidth = document.getElementById('v-width').textContent.replace('PX', '');
+  
+  card.classList.add('is-exporting');
+  card.style.width = exportWidth + 'px';
+
+  await new Promise(r => setTimeout(r, 50));
+
+  try {
+    const canvas = await html2canvas(card, { backgroundColor: null, scale: 3, useCORS: true, allowTaint: true, logging: false });
+    const mime = fmt === 'jpeg' ? 'image/jpeg' : 'image/png';
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL(mime, 0.96); a.download = `nimbus-snapshot.${fmt}`; a.click();
+    toast(`SNAPSHOT SAVED`);
+  } catch(e) { 
+    toast('EXPORT FAILED'); 
+  } finally {
+    // 5. Restore layout
+    card.classList.remove('is-exporting');
+    card.style.width = '100%';
+    fab.style.display = 'flex';
+    flash.classList.remove('fire');
+  }
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+/* ── INIT ── */
+renderCode();
+</script>
+</body>
+</html>
+
+
+```
