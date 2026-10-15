@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full antialiased dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Nimbus — Minimal Code Snapshots</title>
+  <title>Nimbus — Minimalist Code Artifacts</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -18,352 +18,277 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
           },
           colors: {
-            surface: {
-              50: '#18181b',
-              100: '#27272a',
-              200: '#3f3f46',
-              800: '#09090b',
-              900: '#040405',
+            noir: {
+              950: '#070709',
+              900: '#0e0e11',
+              850: '#141418',
+              800: '#1a1a21',
+              700: '#262630',
+              600: '#383846',
             }
+          },
+          boxShadow: {
+            'glow': '0 0 40px -10px rgba(99, 102, 241, 0.25)',
+            'card-soft': '0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08)',
+            'card-glass': '0 30px 60px -20px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.15)',
           }
         }
       }
     };
   </script>
 
-  <!-- Highlight.js and html2canvas -->
+  <!-- Highlight.js & html2canvas -->
   <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
-    /* Custom scrollbar */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    /* Custom sleek scrollbar */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 999px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
 
-    /* Custom range input */
+    /* Dot Matrix Studio Canvas Pattern */
+    .bg-dot-matrix {
+      background-size: 24px 24px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    }
+
+    /* Range Input Custom Styling */
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
-      height: 4px;
-      border-radius: 2px;
-      background: #27272a;
+      height: 3px;
+      border-radius: 9999px;
+      background: #272732;
       outline: none;
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background: #ffffff;
+      background: #f4f4f5;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      transition: transform 0.1s ease, background-color 0.15s ease;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+      transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
+      border: 2px solid #141418;
     }
     input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
+      transform: scale(1.2);
     }
     input[type="range"]::-webkit-slider-thumb:active {
       transform: scale(0.95);
-      background: #e4e4e7;
+      background: #cbd5e1;
     }
 
-    /* Code Container Pre styling */
-    #code-rendered pre {
+    /* Pure code mirror reset */
+    #code-output pre {
       margin: 0 !important;
       padding: 0 !important;
       background: transparent !important;
       font-family: inherit !important;
       font-size: inherit !important;
       line-height: inherit !important;
-      tab-size: 2;
+      letter-spacing: inherit !important;
     }
-    #code-rendered code.hljs {
+    #code-output code.hljs {
       padding: 0 !important;
       background: transparent !important;
       font-family: inherit !important;
       font-size: inherit !important;
       line-height: inherit !important;
+      letter-spacing: inherit !important;
       color: inherit;
     }
 
-    /* Subtle mesh backdrop pattern */
-    .bg-grid-pattern {
-      background-size: 32px 32px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    /* Ambient noise overlay simulation */
+    .noise-layer {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
     }
 
-    /* Glass pill */
-    .glass-panel {
-      background: rgba(18, 18, 22, 0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    /* Smooth scale container for mobile preview */
-    #preview-stage {
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      transform-origin: center center;
+    /* Direct Editor Sync Textarea */
+    .editor-synced {
+      caret-color: #6366f1;
     }
   </style>
 </head>
-<body class="h-full bg-[#09090b] text-zinc-100 font-sans select-none overflow-hidden flex flex-col">
 
-  <!-- Top Navigation Header -->
-  <header class="h-14 border-b border-white/[0.07] bg-surface-900/80 backdrop-blur-md px-4 flex items-center justify-between shrink-0 z-30">
+<body class="h-full bg-noir-950 text-zinc-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 overflow-hidden flex flex-col">
+
+  <header class="h-14 border-b border-white/[0.06] bg-noir-900/60 backdrop-blur-xl px-4 sm:px-6 flex items-center justify-between z-30 shrink-0">
+    <!-- Brand Pill -->
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2">
-        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-          </svg>
+      <div class="flex items-center gap-2 group cursor-pointer" onclick="resetToSample()">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-[1px] shadow-sm transition transform group-hover:scale-105">
+          <div class="w-full h-full bg-noir-950 rounded-[7px] flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-zinc-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+            </svg>
+          </div>
         </div>
-        <span class="font-semibold text-sm tracking-tight text-white">Nimbus</span>
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-semibold tracking-tight text-white font-sans">Nimbus</span>
+          <span class="text-[10px] tracking-wide uppercase px-1.5 py-0.5 rounded-md bg-white/[0.05] text-zinc-400 border border-white/[0.06] font-mono font-medium">Studio</span>
+        </div>
       </div>
-      <span class="hidden sm:inline-block text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-zinc-400 border border-white/[0.05]">
-        v2.0 Minimal
-      </span>
     </div>
 
-    <!-- Right Header Actions -->
-    <div class="flex items-center gap-2">
-      <!-- Quick toggle editor button on mobile -->
-      <button onclick="toggleEditorDrawer()" class="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] text-xs font-medium text-zinc-200 transition">
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+    <!-- Quick Tool Switcher Header Actions -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Edit Mode Toggle -->
+      <button id="mode-toggle-btn" onclick="toggleDirectEditMode()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-300 transition active:scale-95">
+        <svg id="mode-icon-pen" class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
         </svg>
-        <span>Code</span>
+        <span id="mode-text">Direct Edit</span>
       </button>
 
       <!-- Copy to Clipboard -->
-      <button onclick="copySnippetImage()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-xs font-medium text-zinc-300 border border-white/[0.06] transition active:scale-95" title="Copy high-res image">
+      <button onclick="copySnapshot()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-300 transition active:scale-95" title="Copy raw image to clipboard">
         <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
         </svg>
-        <span class="hidden sm:inline">Copy Image</span>
+        <span class="hidden sm:inline">Copy</span>
       </button>
 
-      <!-- Export PNG Button -->
-      <button onclick="exportSnapshot('png')" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-semibold shadow-sm transition active:scale-95">
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <!-- Export Button -->
+      <button onclick="exportSnapshot()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-noir-950 text-xs font-semibold shadow-sm hover:shadow transition active:scale-95">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
-        <span>Export</span>
+        <span>Export PNG</span>
       </button>
     </div>
   </header>
 
-  <main class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
-    
-    <!-- LEFT/BOTTOM CONTROLS PANEL -->
-    <aside id="controls-panel" class="order-2 md:order-1 w-full md:w-80 lg:w-96 border-t md:border-t-0 md:border-r border-white/[0.07] bg-surface-900 flex flex-col z-20 transition-all duration-300 max-h-[48vh] md:max-h-full">
+  <main class="flex-1 relative flex flex-col md:flex-row overflow-hidden bg-noir-950">
+
+    <!-- FLOATING FLOATING COMMAND DECK -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-2xl px-2 py-2 rounded-2xl bg-noir-900/80 backdrop-blur-2xl border border-white/10 shadow-2xl flex items-center justify-between gap-2 overflow-x-auto">
       
-      <!-- Panel Tabs -->
-      <div class="flex items-center border-b border-white/[0.06] px-3 pt-2 gap-1 shrink-0 bg-surface-900">
-        <button id="tab-btn-style" onclick="switchTab('style')" class="flex-1 py-2 text-xs font-medium text-white border-b-2 border-indigo-500 transition text-center">
-          Appearance
-        </button>
-        <button id="tab-btn-code" onclick="switchTab('code')" class="flex-1 py-2 text-xs font-medium text-zinc-400 border-b-2 border-transparent hover:text-zinc-200 transition text-center">
-          Editor & Code
-        </button>
+      <!-- Gradient / Backdrop Selector -->
+      <div class="flex items-center gap-1.5 pl-2">
+        <span class="text-[11px] font-mono text-zinc-400 uppercase tracking-wider hidden sm:inline mr-1">Theme</span>
+        <div class="flex items-center gap-1.5" id="preset-container">
+          <!-- Populated by JS -->
+        </div>
       </div>
 
-      <!-- Tab 1: Appearance & Styles -->
-      <div id="tab-content-style" class="flex-1 overflow-y-auto p-4 space-y-5">
-        
-        <!-- Background Gradient Selection -->
-        <div>
-          <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-2.5">Backdrop Theme</label>
-          <div class="grid grid-cols-6 gap-2" id="gradient-palette">
-            <!-- Dynamically populated or static swatches -->
-          </div>
-        </div>
+      <div class="h-4 w-[1px] bg-white/10 shrink-0"></div>
 
-        <!-- Syntax Theme -->
-        <div>
-          <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-2">Code Highlighter</label>
-          <div class="grid grid-cols-2 gap-1.5" id="theme-selectors">
-            <button onclick="setTheme('atom-one-dark', '#1e1e24', '#abb2bf', this)" class="theme-btn active px-3 py-2 rounded-lg bg-white/[0.05] border border-white/10 text-left text-xs font-medium text-white flex items-center justify-between">
-              <span>One Dark</span>
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            </button>
-            <button onclick="setTheme('dracula', '#282a36', '#f8f8f2', this)" class="theme-btn px-3 py-2 rounded-lg bg-white/[0.03] border border-transparent text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
-              <span>Dracula</span>
-              <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-            </button>
-            <button onclick="setTheme('tokyo-night-dark', '#1a1b26', '#a9b1d6', this)" class="theme-btn px-3 py-2 rounded-lg bg-white/[0.03] border border-transparent text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
-              <span>Tokyo Night</span>
-              <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-            </button>
-            <button onclick="setTheme('atom-one-light', '#f8fafc', '#334155', this)" class="theme-btn px-3 py-2 rounded-lg bg-white/[0.03] border border-transparent text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
-              <span>Paper Light</span>
-              <span class="w-2 h-2 rounded-full bg-amber-200"></span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Sliders Group -->
-        <div class="space-y-4 pt-1">
-          <!-- Padding -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Padding</span>
-              <span id="label-padding" class="font-mono text-[11px] text-zinc-300">40px</span>
-            </div>
-            <input type="range" min="16" max="96" value="40" class="w-full" oninput="updateConfig('padding', this.value)">
-          </div>
-
-          <!-- Font Size -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Font Scale</span>
-              <span id="label-font" class="font-mono text-[11px] text-zinc-300">14px</span>
-            </div>
-            <input type="range" min="12" max="22" value="14" class="w-full" oninput="updateConfig('fontSize', this.value)">
-          </div>
-
-          <!-- Card Corner Radius -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Window Radius</span>
-              <span id="label-radius" class="font-mono text-[11px] text-zinc-300">14px</span>
-            </div>
-            <input type="range" min="4" max="28" value="14" class="w-full" oninput="updateConfig('radius', this.value)">
-          </div>
-
-          <!-- Shadow Elevation -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Elevation Shadow</span>
-              <span id="label-shadow" class="font-mono text-[11px] text-zinc-300">Medium</span>
-            </div>
-            <input type="range" min="0" max="3" value="2" class="w-full" oninput="updateConfig('shadow', this.value)">
-          </div>
-        </div>
-
-        <!-- Toggles -->
-        <div class="pt-2 border-t border-white/[0.06] space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-zinc-300 font-medium">Window Header</span>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="toggle-header" checked onchange="updateConfig('showHeader', this.checked)" class="sr-only peer">
-              <div class="w-9 h-5 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-zinc-300 font-medium">Line Numbers</span>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="toggle-linenums" checked onchange="updateConfig('showLineNums', this.checked)" class="sr-only peer">
-              <div class="w-9 h-5 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-zinc-300 font-medium">Watermark</span>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="toggle-watermark" checked onchange="updateConfig('showWatermark', this.checked)" class="sr-only peer">
-              <div class="w-9 h-5 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Tab 2: Code Editor -->
-      <div id="tab-content-code" class="hidden flex-1 overflow-y-auto p-4 space-y-4 flex flex-col">
-        <div>
-          <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Language</label>
-          <select id="code-lang" onchange="updateLanguage(this.value)" class="w-full bg-zinc-800/80 border border-white/10 rounded-lg px-3 py-2 text-xs font-medium text-zinc-200 outline-none focus:border-indigo-500 cursor-pointer">
-            <option value="javascript">JavaScript</option>
+      <!-- Quick Toggles Toolbar -->
+      <div class="flex items-center gap-1">
+        <!-- Syntax Highlighter Language Dropdown -->
+        <div class="relative">
+          <select id="lang-select" onchange="setLanguage(this.value)" class="bg-noir-850 hover:bg-noir-800 text-zinc-300 text-xs rounded-xl px-2.5 py-1.5 pr-6 border border-white/10 outline-none appearance-none cursor-pointer font-mono font-medium transition">
             <option value="typescript">TypeScript</option>
+            <option value="javascript">JavaScript</option>
             <option value="python">Python</option>
             <option value="rust">Rust</option>
             <option value="go">Go</option>
             <option value="html">HTML</option>
             <option value="css">CSS</option>
             <option value="sql">SQL</option>
-            <option value="bash">Bash / Shell</option>
             <option value="json">JSON</option>
+            <option value="shell">Bash</option>
           </select>
+          <div class="pointer-events-none absolute inset-y-0 right-1.5 flex items-center text-zinc-400">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">File Title / Path</label>
-          <input type="text" id="window-title-input" value="serviceWorker.ts" oninput="updateWindowTitle(this.value)" class="w-full bg-zinc-800/80 border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-zinc-200 outline-none focus:border-indigo-500">
-        </div>
+        <!-- Customizer Drawer Toggle Button -->
+        <button id="open-settings-btn" onclick="toggleInspectorDrawer()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-noir-850 hover:bg-noir-800 border border-white/10 text-xs font-medium text-zinc-300 transition">
+          <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+          <span class="hidden sm:inline">Format</span>
+        </button>
 
-        <div class="flex-1 flex flex-col min-h-[220px]">
-          <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Source Snippet</label>
-          <textarea id="code-input" spellcheck="false" class="w-full flex-1 min-h-[180px] bg-zinc-950/80 border border-white/10 rounded-lg p-3 text-xs font-mono text-zinc-200 outline-none focus:border-indigo-500 resize-none leading-relaxed" oninput="onCodeChange(this.value)"></textarea>
-        </div>
+        <!-- Aspect Ratio Button -->
+        <button onclick="cycleAspectRatio()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-noir-850 hover:bg-noir-800 border border-white/10 text-xs font-mono text-zinc-300 transition">
+          <span id="aspect-ratio-label">Auto</span>
+        </button>
       </div>
+    </div>
 
-    </aside>
-
-    <!-- PREVIEW STAGE AREA -->
-    <section class="order-1 md:order-2 flex-1 relative bg-grid-pattern overflow-auto flex items-center justify-center p-4 sm:p-8 md:p-12">
+    <section id="canvas-stage" class="flex-1 relative bg-dot-matrix overflow-auto flex items-center justify-center p-6 sm:p-12 pb-24 md:pb-12">
       
-      <!-- Stage Wrapper for Scaling on narrow mobile screens -->
-      <div id="stage-wrapper" class="w-full flex items-center justify-center">
+      <!-- Capture Wrapper: What gets exported to PNG -->
+      <div id="export-target" class="relative transition-all duration-300 flex items-center justify-center max-w-full" style="padding: 48px; border-radius: 24px;">
         
-        <!-- The actual capture card -->
-        <div id="capture-container" class="relative transition-all duration-300 flex items-center justify-center shadow-2xl" style="padding: 40px; border-radius: 20px;">
+        <!-- Gradient Background Layer with optional Noise texture -->
+        <div id="backdrop-layer" class="absolute inset-0 rounded-[inherit] transition-all duration-500 overflow-hidden shadow-2xl">
+          <div class="absolute inset-0 noise-layer pointer-events-none"></div>
+        </div>
+
+        <!-- The Code Window Card -->
+        <div id="code-card" class="relative z-10 w-full min-w-[300px] sm:min-w-[440px] max-w-[720px] transition-all duration-200 border border-white/10 backdrop-blur-2xl shadow-card-glass rounded-2xl overflow-hidden flex flex-col bg-noir-950/85">
           
-          <!-- Background Gradient Canvas Layer -->
-          <div id="card-background-layer" class="absolute inset-0 rounded-[inherit] transition-all duration-300 z-0"></div>
-
-          <!-- Code Window Container -->
-          <div id="code-window" class="relative z-10 w-full max-w-[640px] min-w-[280px] sm:min-w-[360px] overflow-hidden transition-all duration-200 border border-white/10 shadow-2xl backdrop-blur-xl">
+          <!-- Card Header / Titlebar -->
+          <div id="card-header" class="h-11 px-4 border-b border-white/[0.08] flex items-center justify-between select-none bg-white/[0.02]">
             
-            <!-- Window Titlebar -->
-            <div id="window-header" class="h-10 px-4 border-b border-white/[0.08] flex items-center justify-between select-none">
-              <!-- MacOS Traffic Lights -->
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-[#ff5f56] border border-black/10 inline-block"></span>
-                <span class="w-3 h-3 rounded-full bg-[#ffbd2e] border border-black/10 inline-block"></span>
-                <span class="w-3 h-3 rounded-full bg-[#27c93f] border border-black/10 inline-block"></span>
-              </div>
-
-              <!-- Title / Filename -->
-              <div id="window-title-display" class="font-mono text-[11px] text-zinc-400 font-medium tracking-tight truncate max-w-[200px]">
-                serviceWorker.ts
-              </div>
-
-              <!-- Language Tag or Indicator -->
-              <div class="flex items-center gap-1.5">
-                <span id="lang-indicator" class="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-white/[0.08] text-zinc-400 uppercase tracking-wider">
-                  TS
-                </span>
-              </div>
+            <!-- Window Controls -->
+            <div id="window-dots" class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/20 block transition-transform hover:scale-110"></span>
+              <span class="w-3 h-3 rounded-full bg-[#febc2e] border border-black/20 block transition-transform hover:scale-110"></span>
+              <span class="w-3 h-3 rounded-full bg-[#28c840] border border-black/20 block transition-transform hover:scale-110"></span>
             </div>
 
-            <!-- Code Content Body -->
-            <div id="code-content-wrapper" class="p-5 overflow-x-auto">
-              <div class="flex gap-4 font-mono text-[14px] leading-relaxed">
-                <!-- Line Numbers -->
-                <div id="line-numbers" class="select-none text-zinc-600 text-right shrink-0 pr-1 tabular-nums font-mono"></div>
-                <!-- Highlighted Code Element -->
-                <div id="code-rendered" class="flex-1 whitespace-pre outline-none"></div>
-              </div>
-            </div>
+            <!-- Filename Input (Editable directly on the card!) -->
+            <input 
+              id="filename-input" 
+              type="text" 
+              value="rateLimiter.ts" 
+              spellcheck="false"
+              class="bg-transparent text-center font-mono text-[11px] text-zinc-400 font-medium tracking-tight outline-none border-b border-transparent hover:border-zinc-700 focus:border-indigo-500 focus:text-zinc-200 transition px-2 py-0.5 rounded truncate max-w-[240px]"
+              title="Click to rename snippet"
+            />
 
-            <!-- Minimal Watermark Footer (Optional) -->
-            <div id="card-watermark" class="px-4 py-2 border-t border-white/[0.04] flex items-center justify-between text-[10px] font-mono text-zinc-500">
-              <span class="opacity-70">Nimbus Code Studio</span>
-              <span class="opacity-40 tracking-wider">UTF-8</span>
+            <!-- Language Pill Tag -->
+            <div class="flex items-center gap-1.5">
+              <span id="card-lang-tag" class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-zinc-400 tracking-wider">
+                TS
+              </span>
             </div>
+          </div>
 
+          <!-- Code Window Body -->
+          <div class="relative p-5 overflow-hidden flex font-mono leading-relaxed" id="code-container-box">
+            
+            <!-- Line Numbers Column -->
+            <div id="line-numbers" class="select-none text-zinc-600 font-mono text-right shrink-0 pr-4 tabular-nums text-xs leading-relaxed border-r border-white/[0.06] mr-4"></div>
+
+            <!-- Read / Output Render Area -->
+            <div id="code-output" class="flex-1 whitespace-pre overflow-x-auto text-xs leading-relaxed focus:outline-none"></div>
+
+            <!-- Direct In-Place Code Editor Area (Toggled via button) -->
+            <textarea 
+              id="inline-textarea" 
+              spellcheck="false" 
+              autocomplete="off" 
+              autocorrect="off" 
+              autocapitalize="off"
+              class="hidden absolute inset-0 z-20 w-full h-full p-5 bg-noir-950 font-mono text-xs text-zinc-200 outline-none resize-none leading-relaxed overflow-x-auto border-none"
+            ></textarea>
+          </div>
+
+          <!-- Card Bottom Watermark / Signature -->
+          <div id="card-footer" class="px-4 py-2 border-t border-white/[0.04] bg-white/[0.01] flex items-center justify-between text-[10px] font-mono text-zinc-500">
+            <span class="flex items-center gap-1.5 opacity-60">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>Nimbus Studio</span>
+            </span>
+            <span class="opacity-40">UTF-8</span>
           </div>
 
         </div>
@@ -372,354 +297,570 @@
 
     </section>
 
+    <!-- Slide-over Inspector Panel -->
+    <aside id="inspector-panel" class="fixed md:static inset-y-0 right-0 z-40 w-80 bg-noir-900 border-l border-white/[0.08] flex flex-col transform translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none">
+      
+      <!-- Panel Header -->
+      <div class="h-14 border-b border-white/[0.06] px-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+          <span class="text-xs font-semibold text-white uppercase tracking-wider">Canvas Settings</span>
+        </div>
+        <button onclick="toggleInspectorDrawer()" class="md:hidden text-zinc-400 hover:text-white p-1 rounded-lg">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Settings Content -->
+      <div class="flex-1 overflow-y-auto p-5 space-y-6">
+
+        <!-- Syntax Color Themes -->
+        <div>
+          <label class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2.5">Syntax Highlight</label>
+          <div class="grid grid-cols-2 gap-2" id="syntax-theme-options">
+            <button onclick="setSyntaxTheme('atom-one-dark', '#0e0e12', '#abb2bf', this)" class="theme-select-btn active-theme px-3 py-2 rounded-xl bg-white/[0.05] border border-indigo-500/50 text-left text-xs font-medium text-white flex items-center justify-between">
+              <span>One Dark</span>
+              <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+            </button>
+            <button onclick="setSyntaxTheme('tokyo-night-dark', '#1a1b26', '#a9b1d6', this)" class="theme-select-btn px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
+              <span>Tokyo Night</span>
+              <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+            </button>
+            <button onclick="setSyntaxTheme('github-dark', '#0d1117', '#c9d1d9', this)" class="theme-select-btn px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
+              <span>GitHub Noir</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </button>
+            <button onclick="setSyntaxTheme('nord', '#2e3440', '#d8dee9', this)" class="theme-select-btn px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
+              <span>Nord Frost</span>
+              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Window Chrome Style -->
+        <div>
+          <label class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2.5">Window Chrome</label>
+          <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-noir-850 border border-white/5">
+            <button onclick="setWindowHeaderStyle('mac')" id="btn-hdr-mac" class="py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center">macOS</button>
+            <button onclick="setWindowHeaderStyle('minimal')" id="btn-hdr-min" class="py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center">Dots</button>
+            <button onclick="setWindowHeaderStyle('none')" id="btn-hdr-none" class="py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center">Plain</button>
+          </div>
+        </div>
+
+        <!-- Sliders Group -->
+        <div class="space-y-4 pt-2 border-t border-white/[0.06]">
+          <!-- Canvas Padding -->
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1.5">
+              <span class="text-zinc-400 font-medium">Canvas Padding</span>
+              <span id="val-padding" class="font-mono text-zinc-300">48px</span>
+            </div>
+            <input type="range" min="16" max="96" value="48" class="w-full" oninput="setOption('padding', this.value)">
+          </div>
+
+          <!-- Font Size -->
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1.5">
+              <span class="text-zinc-400 font-medium">Font Scale</span>
+              <span id="val-font" class="font-mono text-zinc-300">13px</span>
+            </div>
+            <input type="range" min="11" max="20" value="13" class="w-full" oninput="setOption('fontSize', this.value)">
+          </div>
+
+          <!-- Window Radius -->
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1.5">
+              <span class="text-zinc-400 font-medium">Corner Smoothness</span>
+              <span id="val-radius" class="font-mono text-zinc-300">16px</span>
+            </div>
+            <input type="range" min="4" max="32" value="16" class="w-full" oninput="setOption('radius', this.value)">
+          </div>
+
+          <!-- Glass Blur Opacity -->
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1.5">
+              <span class="text-zinc-400 font-medium">Glass Opacity</span>
+              <span id="val-opacity" class="font-mono text-zinc-300">85%</span>
+            </div>
+            <input type="range" min="40" max="100" value="85" class="w-full" oninput="setOption('opacity', this.value)">
+          </div>
+        </div>
+
+        <!-- Visibility Switches -->
+        <div class="space-y-3 pt-3 border-t border-white/[0.06]">
+          <!-- Line Numbers -->
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-zinc-300 font-medium">Show Line Numbers</span>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="chk-linenums" checked onchange="setOption('showLineNumbers', this.checked)" class="sr-only peer">
+              <div class="w-8 h-4 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-500"></div>
+            </label>
+          </div>
+
+          <!-- Watermark -->
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-zinc-300 font-medium">Card Watermark</span>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="chk-watermark" checked onchange="setOption('showWatermark', this.checked)" class="sr-only peer">
+              <div class="w-8 h-4 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-500"></div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+    </aside>
+
   </main>
 
-  <!-- Shutter Flash Overlay for Photo Capture Effect -->
-  <div id="shutter-flash" class="fixed inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-150 z-50"></div>
+  <!-- Shutter Flash Animation -->
+  <div id="flash-overlay" class="fixed inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-150 z-50"></div>
 
-  <!-- Minimalist Toast Notification -->
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-zinc-900/90 text-white text-xs font-medium border border-white/10 shadow-2xl backdrop-blur-md opacity-0 translate-y-3 pointer-events-none transition-all duration-200 flex items-center gap-2">
-    <svg id="toast-icon" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-    </svg>
-    <span id="toast-text">Snapshot downloaded</span>
+  <!-- Sleek Floating Toast -->
+  <div id="toast-banner" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-noir-850/90 text-white text-xs font-medium border border-white/10 shadow-2xl backdrop-blur-xl opacity-0 -translate-y-2 pointer-events-none transition-all duration-200 flex items-center gap-2">
+    <div id="toast-icon-wrapper" class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <span id="toast-message">Copied to clipboard</span>
   </div>
 
   <script>
-    // Initial State Configuration
-    const PRESET_GRADIENTS = [
-      { id: 'aurora', name: 'Aurora', css: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%)' },
-      { id: 'sunset', name: 'Sunset Glow', css: 'linear-gradient(135deg, #f97316 0%, #ec4899 50%, #8b5cf6 100%)' },
-      { id: 'emerald', name: 'Emerald Wave', css: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #06b6d4 100%)' },
-      { id: 'midnight', name: 'Deep Space', css: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%)' },
-      { id: 'obsidian', name: 'Monochrome', css: 'linear-gradient(135deg, #18181b 0%, #27272a 100%)' },
-      { id: 'candy', name: 'Cyber Candy', css: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #9333ea 100%)' },
+    // Curated high-aesthetic background gradient meshes
+    const BACKGROUND_PRESETS = [
+      {
+        id: 'aurora-violet',
+        name: 'Aurora',
+        style: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 45%, #ec4899 100%)'
+      },
+      {
+        id: 'cyber-prism',
+        name: 'Prism',
+        style: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%)'
+      },
+      {
+        id: 'tokyo-sunset',
+        name: 'Sunset',
+        style: 'linear-gradient(135deg, #f97316 0%, #f43f5e 50%, #a855f7 100%)'
+      },
+      {
+        id: 'emerald-abyss',
+        name: 'Emerald',
+        style: 'linear-gradient(135deg, #059669 0%, #0d9488 50%, #0284c7 100%)'
+      },
+      {
+        id: 'glass-noir',
+        name: 'OLED Noir',
+        style: 'linear-gradient(135deg, #18181b 0%, #09090b 100%)'
+      },
+      {
+        id: 'frost-titanium',
+        name: 'Silver',
+        style: 'linear-gradient(135deg, #334155 0%, #1e293b 50%, #0f172a 100%)'
+      }
     ];
 
-    const DEFAULT_CODE = `// Fast cache responder with stale-while-revalidate
-async function handleRequest(request: Request): Promise<Response> {
-  const cache = await caches.open("v2-runtime");
-  const cachedResponse = await cache.match(request);
+    const ASPECT_RATIOS = ['Auto', '16:9', '1:1', '4:5'];
+    let aspectIndex = 0;
 
-  const fetchPromise = fetch(request).then(networkResponse => {
-    if (networkResponse.status === 200) {
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-  });
+    const SAMPLE_CODE = `// High-throughput sliding-window rate limiter
+import { Redis } from "@upstash/redis";
 
-  return cachedResponse || fetchPromise;
+export class RateLimiter {
+  constructor(private redis: Redis, private limit: number = 60) {}
+
+  async check(userId: string): Promise<{ success: boolean; remaining: number }> {
+    const key = \`rate_limit:\${userId}\`;
+    const now = Date.now();
+    const windowStart = now - 60_000;
+
+    const pipeline = this.redis.pipeline();
+    pipeline.zremrangebyscore(key, 0, windowStart);
+    pipeline.zadd(key, { score: now, member: \`\${now}\` });
+    pipeline.zcard(key);
+    pipeline.expire(key, 60);
+
+    const [,, count] = await pipeline.exec();
+    return {
+      success: (count as number) <= this.limit,
+      remaining: Math.max(0, this.limit - (count as number))
+    };
+  }
 }`;
 
-    const config = {
-      code: DEFAULT_CODE,
-      lang: 'typescript',
-      title: 'serviceWorker.ts',
-      theme: 'atom-one-dark',
-      themeBg: '#18181b',
-      themeColor: '#abb2bf',
-      gradientId: 'aurora',
-      padding: 40,
-      fontSize: 14,
-      radius: 14,
-      shadow: 2,
-      showHeader: true,
-      showLineNums: true,
+    // Application State Object
+    const appState = {
+      code: SAMPLE_CODE,
+      language: 'typescript',
+      filename: 'rateLimiter.ts',
+      presetId: 'aurora-violet',
+      syntaxTheme: 'atom-one-dark',
+      cardBg: '#0e0e12',
+      cardTextColor: '#abb2bf',
+      padding: 48,
+      fontSize: 13,
+      radius: 16,
+      opacity: 85,
+      chromeStyle: 'mac',
+      showLineNumbers: true,
       showWatermark: true,
+      isEditingDirectly: false,
+      aspectRatio: 'Auto'
     };
 
     // DOM Elements Cache
-    const codeInput = document.getElementById('code-input');
-    const codeRendered = document.getElementById('code-rendered');
+    const exportTarget = document.getElementById('export-target');
+    const backdropLayer = document.getElementById('backdrop-layer');
+    const codeCard = document.getElementById('code-card');
+    const codeOutput = document.getElementById('code-output');
     const lineNumbers = document.getElementById('line-numbers');
-    const windowHeader = document.getElementById('window-header');
-    const windowTitleDisplay = document.getElementById('window-title-display');
-    const windowTitleInput = document.getElementById('window-title-input');
-    const langIndicator = document.getElementById('lang-indicator');
-    const cardBgLayer = document.getElementById('card-background-layer');
-    const captureContainer = document.getElementById('capture-container');
-    const codeWindow = document.getElementById('code-window');
-    const cardWatermark = document.getElementById('card-watermark');
-    const toastEl = document.getElementById('toast');
-    const toastText = document.getElementById('toast-text');
-    const hljsThemeLink = document.getElementById('hljs-theme');
+    const inlineTextarea = document.getElementById('inline-textarea');
+    const filenameInput = document.getElementById('filename-input');
+    const cardLangTag = document.getElementById('card-lang-tag');
+    const cardHeader = document.getElementById('card-header');
+    const cardFooter = document.getElementById('card-footer');
+    const windowDots = document.getElementById('window-dots');
+    const hljsTheme = document.getElementById('hljs-theme');
+    const langSelect = document.getElementById('lang-select');
+    const modeToggleBtn = document.getElementById('mode-toggle-btn');
+    const modeText = document.getElementById('mode-text');
 
-    // Build Gradient Swatches in Control Panel
-    function initGradientPalette() {
-      const container = document.getElementById('gradient-palette');
+    // Build gradient swatches
+    function renderBackdropSwatches() {
+      const container = document.getElementById('preset-container');
       container.innerHTML = '';
-      PRESET_GRADIENTS.forEach((item, index) => {
+
+      BACKGROUND_PRESETS.forEach(preset => {
         const btn = document.createElement('button');
-        btn.className = `w-8 h-8 rounded-full transition-transform active:scale-90 border-2 ${
-          config.gradientId === item.id ? 'border-white scale-110 shadow-lg' : 'border-transparent hover:scale-105'
+        const isActive = appState.presetId === preset.id;
+        btn.className = `w-6 h-6 rounded-full transition-all duration-200 border-2 ${
+          isActive ? 'border-white scale-110 shadow-glow' : 'border-white/10 hover:border-white/40 hover:scale-105'
         }`;
-        btn.style.background = item.css;
-        btn.title = item.name;
-        btn.onclick = () => selectGradient(item.id);
+        btn.style.background = preset.style;
+        btn.title = preset.name;
+        btn.onclick = () => selectBackdrop(preset.id);
         container.appendChild(btn);
       });
     }
 
-    function selectGradient(gradientId) {
-      config.gradientId = gradientId;
-      const found = PRESET_GRADIENTS.find(g => g.id === gradientId);
+    function selectBackdrop(id) {
+      appState.presetId = id;
+      const found = BACKGROUND_PRESETS.find(p => p.id === id);
       if (found) {
-        cardBgLayer.style.background = found.css;
+        backdropLayer.style.background = found.style;
       }
-      initGradientPalette();
+      renderBackdropSwatches();
     }
 
-    // Render Syntax Highlighted Code
-    function render() {
-      const code = config.code;
-      const lines = code.split('\n');
-      
+    function renderCode() {
+      const text = appState.code;
+      const lines = text.split('\n');
+
       // Update line numbering
-      if (config.showLineNums) {
+      if (appState.showLineNumbers) {
         lineNumbers.style.display = 'block';
         lineNumbers.textContent = lines.map((_, i) => i + 1).join('\n');
       } else {
         lineNumbers.style.display = 'none';
       }
 
-      // Highlight syntax using Highlight.js
+      // Syntax highlight
       try {
-        const highlighted = hljs.highlight(code, {
-          language: config.lang,
+        const highlighted = hljs.highlight(text, {
+          language: appState.language,
           ignoreIllegals: true
         });
-        codeRendered.innerHTML = `<pre><code class="hljs">${highlighted.value}</code></pre>`;
-      } catch (err) {
-        codeRendered.innerHTML = `<pre><code class="hljs">${escapeHtml(code)}</code></pre>`;
+        codeOutput.innerHTML = `<pre><code class="hljs">${highlighted.value}</code></pre>`;
+      } catch (e) {
+        // Fallback for custom or unknown formats
+        const safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        codeOutput.innerHTML = `<pre><code class="hljs">${safe}</code></pre>`;
       }
 
-      // Sync window meta
-      windowTitleDisplay.textContent = config.title;
-      langIndicator.textContent = getLangShort(config.lang);
+      // Sync language tag badge
+      cardLangTag.textContent = getLangBadge(appState.language);
     }
 
-    function escapeHtml(text) {
-      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-
-    function getLangShort(lang) {
-      const map = {
-        javascript: 'JS',
+    function getLangBadge(lang) {
+      const badges = {
         typescript: 'TS',
+        javascript: 'JS',
         python: 'PY',
         rust: 'RS',
         go: 'GO',
         html: 'HTML',
         css: 'CSS',
         sql: 'SQL',
-        bash: 'SH',
-        json: 'JSON'
+        json: 'JSON',
+        shell: 'SH'
       };
-      return map[lang] || lang.substring(0, 3).toUpperCase();
+      return badges[lang] || lang.slice(0, 3).toUpperCase();
     }
 
-    function onCodeChange(val) {
-      config.code = val;
-      render();
+    function setLanguage(lang) {
+      appState.language = lang;
+      renderCode();
     }
 
-    function updateLanguage(val) {
-      config.lang = val;
-      render();
-    }
+    // Toggle In-place Direct Editing Mode
+    function toggleDirectEditMode() {
+      appState.isEditingDirectly = !appState.isEditingDirectly;
 
-    function updateWindowTitle(val) {
-      config.title = val || 'untitled';
-      windowTitleDisplay.textContent = config.title;
-    }
-
-    function setTheme(themeId, bgColor, textColor, btnElement) {
-      config.theme = themeId;
-      config.themeBg = bgColor;
-      config.themeColor = textColor;
-
-      // Update stylesheet link
-      hljsThemeLink.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeId}.min.css`;
-      
-      // Apply card window background
-      codeWindow.style.backgroundColor = bgColor;
-      codeRendered.style.color = textColor;
-
-      // Update button active state
-      document.querySelectorAll('.theme-btn').forEach(btn => {
-        btn.classList.remove('active', 'border-white/10', 'bg-white/[0.05]');
-        btn.classList.add('border-transparent', 'bg-white/[0.03]');
-      });
-      if (btnElement) {
-        btnElement.classList.add('active', 'border-white/10', 'bg-white/[0.05]');
-        btnElement.classList.remove('border-transparent');
-      }
-
-      setTimeout(render, 30);
-    }
-
-    function updateConfig(prop, val) {
-      if (prop === 'padding') {
-        config.padding = val;
-        captureContainer.style.padding = `${val}px`;
-        document.getElementById('label-padding').textContent = `${val}px`;
-      } else if (prop === 'fontSize') {
-        config.fontSize = val;
-        codeRendered.style.fontSize = `${val}px`;
-        lineNumbers.style.fontSize = `${val}px`;
-        document.getElementById('label-font').textContent = `${val}px`;
-      } else if (prop === 'radius') {
-        config.radius = val;
-        codeWindow.style.borderRadius = `${val}px`;
-        document.getElementById('label-radius').textContent = `${val}px`;
-      } else if (prop === 'shadow') {
-        config.shadow = val;
-        const shadowMap = [
-          'none',
-          '0 10px 25px -5px rgba(0,0,0,0.3)',
-          '0 25px 50px -12px rgba(0,0,0,0.45)',
-          '0 35px 80px -15px rgba(0,0,0,0.6)'
-        ];
-        const labelMap = ['None', 'Soft', 'Medium', 'Heavy'];
-        codeWindow.style.boxShadow = shadowMap[val];
-        document.getElementById('label-shadow').textContent = labelMap[val];
-      } else if (prop === 'showHeader') {
-        config.showHeader = val;
-        windowHeader.style.display = val ? 'flex' : 'none';
-      } else if (prop === 'showLineNums') {
-        config.showLineNums = val;
-        render();
-      } else if (prop === 'showWatermark') {
-        config.showWatermark = val;
-        cardWatermark.style.display = val ? 'flex' : 'none';
-      }
-    }
-
-    function switchTab(tabId) {
-      const styleTab = document.getElementById('tab-content-style');
-      const codeTab = document.getElementById('tab-content-code');
-      const styleBtn = document.getElementById('tab-btn-style');
-      const codeBtn = document.getElementById('tab-btn-code');
-
-      if (tabId === 'style') {
-        styleTab.classList.remove('hidden');
-        codeTab.classList.add('hidden');
-        styleBtn.className = "flex-1 py-2 text-xs font-medium text-white border-b-2 border-indigo-500 transition text-center";
-        codeBtn.className = "flex-1 py-2 text-xs font-medium text-zinc-400 border-b-2 border-transparent hover:text-zinc-200 transition text-center";
+      if (appState.isEditingDirectly) {
+        inlineTextarea.value = appState.code;
+        inlineTextarea.classList.remove('hidden');
+        inlineTextarea.focus();
+        modeToggleBtn.classList.add('bg-indigo-600', 'text-white', 'border-indigo-400');
+        modeToggleBtn.classList.remove('bg-white/[0.04]', 'text-zinc-300');
+        modeText.textContent = "Done Editing";
       } else {
-        styleTab.classList.add('hidden');
-        codeTab.classList.remove('hidden');
-        codeBtn.className = "flex-1 py-2 text-xs font-medium text-white border-b-2 border-indigo-500 transition text-center";
-        styleBtn.className = "flex-1 py-2 text-xs font-medium text-zinc-400 border-b-2 border-transparent hover:text-zinc-200 transition text-center";
+        appState.code = inlineTextarea.value;
+        inlineTextarea.classList.add('hidden');
+        modeToggleBtn.classList.remove('bg-indigo-600', 'text-white', 'border-indigo-400');
+        modeToggleBtn.classList.add('bg-white/[0.04]', 'text-zinc-300');
+        modeText.textContent = "Direct Edit";
+        renderCode();
       }
     }
 
-    function toggleEditorDrawer() {
-      switchTab('code');
-      const panel = document.getElementById('controls-panel');
-      panel.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Sync textarea changes in real-time
+    inlineTextarea.addEventListener('input', (e) => {
+      appState.code = e.target.value;
+      renderCode();
+    });
 
-    // Tab key inside textarea support
-    codeInput.addEventListener('keydown', (e) => {
+    // Support indent with tab key
+    inlineTextarea.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
-        const start = codeInput.selectionStart;
-        const end = codeInput.selectionEnd;
-        codeInput.value = codeInput.value.substring(0, start) + '  ' + codeInput.value.substring(end);
-        codeInput.selectionStart = codeInput.selectionEnd = start + 2;
-        onCodeChange(codeInput.value);
+        const start = inlineTextarea.selectionStart;
+        const end = inlineTextarea.selectionEnd;
+        inlineTextarea.value = inlineTextarea.value.substring(0, start) + '  ' + inlineTextarea.value.substring(end);
+        inlineTextarea.selectionStart = inlineTextarea.selectionEnd = start + 2;
+        appState.code = inlineTextarea.value;
+        renderCode();
       }
     });
 
-    async function exportSnapshot(format = 'png') {
-      const flash = document.getElementById('shutter-flash');
-      flash.style.opacity = '0.9';
-      setTimeout(() => { flash.style.opacity = '0'; }, 180);
+    // Filename change listener
+    filenameInput.addEventListener('input', (e) => {
+      appState.filename = e.target.value || 'untitled';
+    });
 
-      try {
-        const canvas = await html2canvas(captureContainer, {
-          backgroundColor: null,
-          scale: 3, // High DPI retina export
-          useCORS: true,
-          logging: false,
-          allowTaint: true,
-        });
+    function setOption(key, val) {
+      appState[key] = val;
 
-        const mime = format === 'jpeg' ? 'image/jpeg' : 'image/png';
-        const link = document.createElement('a');
-        link.download = `${config.title.replace(/\.[^/.]+$/, "")}-nimbus.${format}`;
-        link.href = canvas.toDataURL(mime, 0.95);
-        link.click();
-        showToast('Snapshot exported successfully!');
-      } catch (err) {
-        showToast('Export failed. Please try again.');
+      if (key === 'padding') {
+        exportTarget.style.padding = `${val}px`;
+        document.getElementById('val-padding').textContent = `${val}px`;
+      } else if (key === 'fontSize') {
+        codeOutput.style.fontSize = `${val}px`;
+        lineNumbers.style.fontSize = `${val}px`;
+        inlineTextarea.style.fontSize = `${val}px`;
+        document.getElementById('val-font').textContent = `${val}px`;
+      } else if (key === 'radius') {
+        codeCard.style.borderRadius = `${val}px`;
+        document.getElementById('val-radius').textContent = `${val}px`;
+      } else if (key === 'opacity') {
+        const hexAlpha = Math.round((val / 100) * 255).toString(16).padStart(2, '0');
+        codeCard.style.backgroundColor = `${appState.cardBg}${hexAlpha}`;
+        document.getElementById('val-opacity').textContent = `${val}%`;
+      } else if (key === 'showLineNumbers') {
+        renderCode();
+      } else if (key === 'showWatermark') {
+        cardFooter.style.display = val ? 'flex' : 'none';
       }
     }
 
-    async function copySnippetImage() {
+    function setSyntaxTheme(themeName, bgColor, textColor, btnEl) {
+      appState.syntaxTheme = themeName;
+      appState.cardBg = bgColor;
+      appState.cardTextColor = textColor;
+
+      hljsTheme.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeName}.min.css`;
+
+      const hexAlpha = Math.round((appState.opacity / 100) * 255).toString(16).padStart(2, '0');
+      codeCard.style.backgroundColor = `${bgColor}${hexAlpha}`;
+      codeOutput.style.color = textColor;
+
+      document.querySelectorAll('.theme-select-btn').forEach(btn => {
+        btn.classList.remove('border-indigo-500/50', 'bg-white/[0.05]');
+        btn.classList.add('border-white/5', 'bg-white/[0.02]');
+      });
+      if (btnEl) {
+        btnEl.classList.add('border-indigo-500/50', 'bg-white/[0.05]');
+        btnEl.classList.remove('border-white/5');
+      }
+
+      setTimeout(renderCode, 50);
+    }
+
+    function setWindowHeaderStyle(style) {
+      appState.chromeStyle = style;
+      const btnMac = document.getElementById('btn-hdr-mac');
+      const btnMin = document.getElementById('btn-hdr-min');
+      const btnNone = document.getElementById('btn-hdr-none');
+
+      [btnMac, btnMin, btnNone].forEach(b => {
+        b.className = "py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center";
+      });
+
+      if (style === 'mac') {
+        cardHeader.style.display = 'flex';
+        windowDots.innerHTML = `
+          <span class="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/20 block"></span>
+          <span class="w-3 h-3 rounded-full bg-[#febc2e] border border-black/20 block"></span>
+          <span class="w-3 h-3 rounded-full bg-[#28c840] border border-black/20 block"></span>
+        `;
+        btnMac.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
+      } else if (style === 'minimal') {
+        cardHeader.style.display = 'flex';
+        windowDots.innerHTML = `
+          <span class="w-2.5 h-2.5 rounded-full bg-zinc-600 block"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-zinc-600 block"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-zinc-600 block"></span>
+        `;
+        btnMin.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
+      } else {
+        cardHeader.style.display = 'none';
+        btnNone.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
+      }
+    }
+
+    function cycleAspectRatio() {
+      aspectIndex = (aspectIndex + 1) % ASPECT_RATIOS.length;
+      const ratio = ASPECT_RATIOS[aspectIndex];
+      appState.aspectRatio = ratio;
+      document.getElementById('aspect-ratio-label').textContent = ratio;
+
+      if (ratio === '16:9') {
+        codeCard.style.aspectRatio = '16 / 9';
+      } else if (ratio === '1:1') {
+        codeCard.style.aspectRatio = '1 / 1';
+      } else if (ratio === '4:5') {
+        codeCard.style.aspectRatio = '4 / 5';
+      } else {
+        codeCard.style.aspectRatio = 'auto';
+      }
+    }
+
+    function toggleInspectorDrawer() {
+      const panel = document.getElementById('inspector-panel');
+      const isClosed = panel.classList.contains('translate-x-full');
+      if (isClosed) {
+        panel.classList.remove('translate-x-full');
+      } else {
+        panel.classList.add('translate-x-full');
+      }
+    }
+
+    function resetToSample() {
+      appState.code = SAMPLE_CODE;
+      inlineTextarea.value = SAMPLE_CODE;
+      renderCode();
+      showToast('Sample snippet reset');
+    }
+
+    async function exportSnapshot() {
+      // Trigger camera flash effect
+      const flash = document.getElementById('flash-overlay');
+      flash.style.opacity = '0.9';
+      setTimeout(() => { flash.style.opacity = '0'; }, 160);
+
+      // Make sure direct editor is hidden for capture
+      if (appState.isEditingDirectly) {
+        toggleDirectEditMode();
+      }
+
       showToast('Generating snapshot...');
+
       try {
-        const canvas = await html2canvas(captureContainer, {
+        const canvas = await html2canvas(exportTarget, {
+          backgroundColor: null,
+          scale: 3, // Ultra crisp Retina resolution
+          useCORS: true,
+          logging: false,
+          allowTaint: true
+        });
+
+        const safeFilename = (appState.filename || 'nimbus-snippet').replace(/\.[^/.]+$/, "");
+        const link = document.createElement('a');
+        link.download = `${safeFilename}.png`;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+        showToast('Image downloaded successfully');
+      } catch (err) {
+        showToast('Failed to export snapshot');
+      }
+    }
+
+    async function copySnapshot() {
+      if (appState.isEditingDirectly) {
+        toggleDirectEditMode();
+      }
+
+      showToast('Rendering snapshot for clipboard...');
+
+      try {
+        const canvas = await html2canvas(exportTarget, {
           backgroundColor: null,
           scale: 2.5,
           useCORS: true,
-          logging: false,
+          logging: false
         });
 
         canvas.toBlob(async (blob) => {
           if (!blob) {
-            showToast('Unable to create image blob');
+            showToast('Failed to create snippet image');
             return;
           }
           try {
-            // Standard Clipboard Item
-            const item = new ClipboardItem({ 'image/png': blob });
-            await navigator.clipboard.write([item]);
-            showToast('Image copied to clipboard!');
-          } catch (err) {
-            // Fallback for sandboxed or unsupported iFrames
+            const clipboardItem = new ClipboardItem({ 'image/png': blob });
+            await navigator.clipboard.write([clipboardItem]);
+            showToast('Snapshot copied to clipboard!');
+          } catch (clipErr) {
+            // Fallback for sandboxed environments
             const link = document.createElement('a');
-            link.download = `snippet.png`;
+            link.download = `${appState.filename || 'snippet'}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
-            showToast('Direct copy blocked: image downloaded');
+            showToast('Clipboard restricted: image downloaded');
           }
         }, 'image/png');
       } catch (err) {
-        showToast('Failed to copy image');
+        showToast('Unable to copy image');
       }
     }
 
     function showToast(message) {
-      toastText.textContent = message;
-      toastEl.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
-      toastEl.classList.add('opacity-100', 'translate-y-0');
+      const banner = document.getElementById('toast-banner');
+      const text = document.getElementById('toast-message');
+      text.textContent = message;
+
+      banner.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      banner.classList.add('opacity-100', 'translate-y-0');
 
       setTimeout(() => {
-        toastEl.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
-        toastEl.classList.remove('opacity-100', 'translate-y-0');
-      }, 2500);
+        banner.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        banner.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
     }
 
+    // Application Initialization
     window.addEventListener('DOMContentLoaded', () => {
-      // Sync initial UI values
-      codeInput.value = config.code;
-      windowTitleInput.value = config.title;
-      document.getElementById('code-lang').value = config.lang;
-
-      // Set initial styles
-      initGradientPalette();
-      selectGradient('aurora');
-      updateConfig('padding', config.padding);
-      updateConfig('fontSize', config.fontSize);
-      updateConfig('radius', config.radius);
-      updateConfig('shadow', config.shadow);
-
-      codeWindow.style.backgroundColor = config.themeBg;
-      codeRendered.style.color = config.themeColor;
-
-      render();
+      renderBackdropSwatches();
+      selectBackdrop('aurora-violet');
+      setOption('padding', appState.padding);
+      setOption('fontSize', appState.fontSize);
+      setOption('radius', appState.radius);
+      setOption('opacity', appState.opacity);
+      langSelect.value = appState.language;
+      filenameInput.value = appState.filename;
+      inlineTextarea.value = appState.code;
+      renderCode();
     });
   </script>
 </body>
