@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full antialiased dark">
+<html lang="en" class="h-full antialiased select-none">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Nimbus — Minimalist Code Artifacts</title>
-  
-  <!-- Fonts -->
+  <title>Nimbus — Spatial Code Craft</title>
+
+  <!-- High-end Typefaces -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fira+Code:wght@400;500;600&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -18,77 +18,105 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            jetbrains: ['"JetBrains Mono"', 'monospace'],
+            fira: ['"Fira Code"', 'monospace'],
+            ibm: ['"IBM Plex Mono"', 'monospace'],
           },
           colors: {
-            noir: {
-              950: '#070709',
-              900: '#0e0e11',
-              850: '#141418',
-              800: '#1a1a21',
-              700: '#262630',
-              600: '#383846',
+            carbon: {
+              950: '#030305',
+              900: '#07080b',
+              850: '#0d0e13',
+              800: '#14151c',
+              700: '#1e202b',
+              600: '#2c2f3e',
             }
-          },
-          boxShadow: {
-            'glow': '0 0 40px -10px rgba(99, 102, 241, 0.25)',
-            'card-soft': '0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08)',
-            'card-glass': '0 30px 60px -20px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.15)',
           }
         }
       }
     };
   </script>
 
-  <!-- Highlight.js & html2canvas -->
+  <!-- Syntax Engine & Capture Tools -->
   <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
-    /* Custom sleek scrollbar */
+    /* Kinetic Smoothness */
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 999px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 9999px; }
 
-    /* Dot Matrix Studio Canvas Pattern */
-    .bg-dot-matrix {
-      background-size: 24px 24px;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-    }
-
-    /* Range Input Custom Styling */
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 3px;
-      border-radius: 9999px;
-      background: #272732;
-      outline: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #f4f4f5;
-      cursor: pointer;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
-      transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
-      border: 2px solid #141418;
-    }
-    input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
-    }
-    input[type="range"]::-webkit-slider-thumb:active {
-      transform: scale(0.95);
-      background: #cbd5e1;
+    /* Deep Studio Canvas Grid */
+    .studio-canvas-bg {
+      background-color: #050508;
+      background-image: 
+        radial-gradient(circle at center, rgba(120, 119, 198, 0.08) 0%, transparent 70%),
+        radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px;
     }
 
-    /* Pure code mirror reset */
+    /* Tactile Glass & Neumorphic Precision */
+    .tactile-island {
+      background: rgba(14, 15, 22, 0.72);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: 
+        0 20px 50px -10px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .tactile-pill-btn {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tactile-pill-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-1px);
+    }
+    .tactile-pill-btn:active {
+      transform: translateY(0.5px) scale(0.98);
+    }
+
+    /* 3D Dynamic Perspective Canvas */
+    .perspective-stage {
+      perspective: 1200px;
+    }
+
+    #card-3d-rig {
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+      will-change: transform;
+    }
+
+    /* Specular dynamic light glare on card */
+    .glare-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.14), transparent 60%);
+      mix-blend-mode: overlay;
+      z-index: 25;
+      opacity: var(--glare-opacity, 0);
+      transition: opacity 0.3s ease;
+    }
+
+    /* Fine grain overlay */
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
+    }
+
+    /* Code Container Typography Overrides */
     #code-output pre {
       margin: 0 !important;
       padding: 0 !important;
@@ -96,7 +124,6 @@
       font-family: inherit !important;
       font-size: inherit !important;
       line-height: inherit !important;
-      letter-spacing: inherit !important;
     }
     #code-output code.hljs {
       padding: 0 !important;
@@ -104,369 +131,482 @@
       font-family: inherit !important;
       font-size: inherit !important;
       line-height: inherit !important;
-      letter-spacing: inherit !important;
       color: inherit;
     }
 
-    /* Ambient noise overlay simulation */
-    .noise-layer {
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+    /* Active highlighted line highlight */
+    .line-active {
+      background: rgba(255, 255, 255, 0.08);
+      border-left: 2px solid #6366f1;
+      margin-left: -1rem;
+      padding-left: calc(1rem - 2px);
+      margin-right: -1rem;
+      padding-right: 1rem;
+      border-radius: 2px;
     }
 
-    /* Direct Editor Sync Textarea */
-    .editor-synced {
-      caret-color: #6366f1;
+    /* Slider Precision Track */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #09090e;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    /* CRT Scanline FX */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+      ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.04),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.04)
+      );
+      background-size: 100% 3px, 6px 100%;
     }
   </style>
 </head>
 
-<body class="h-full bg-noir-950 text-zinc-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 overflow-hidden flex flex-col">
+<body class="h-full bg-carbon-950 text-zinc-100 font-sans overflow-hidden flex flex-col relative">
 
-  <header class="h-14 border-b border-white/[0.06] bg-noir-900/60 backdrop-blur-xl px-4 sm:px-6 flex items-center justify-between z-30 shrink-0">
-    <!-- Brand Pill -->
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 group cursor-pointer" onclick="resetToSample()">
-        <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-[1px] shadow-sm transition transform group-hover:scale-105">
-          <div class="w-full h-full bg-noir-950 rounded-[7px] flex items-center justify-center">
-            <svg class="w-3.5 h-3.5 text-zinc-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
-            </svg>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-sm font-semibold tracking-tight text-white font-sans">Nimbus</span>
-          <span class="text-[10px] tracking-wide uppercase px-1.5 py-0.5 rounded-md bg-white/[0.05] text-zinc-400 border border-white/[0.06] font-mono font-medium">Studio</span>
-        </div>
+  <!-- Top Spatial Bar -->
+  <header class="h-16 px-6 flex items-center justify-between z-30 shrink-0 pointer-events-none">
+    
+    <!-- Brand / Studio Signature -->
+    <div class="flex items-center gap-3 pointer-events-auto">
+      <div class="h-10 px-3.5 rounded-full tactile-island flex items-center gap-2.5">
+        <div class="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-violet-400 via-pink-400 to-indigo-400 animate-pulse"></div>
+        <span class="text-xs font-bold tracking-wider uppercase bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">
+          Nimbus
+        </span>
+        <span class="text-[9px] font-ibm tracking-widest text-zinc-400 border-l border-white/10 pl-2">
+          SPATIAL STUDIO
+        </span>
       </div>
+
+      <!-- Quick Canvas Tilt Physics Toggle -->
+      <button 
+        id="tilt-toggle-btn"
+        onclick="toggle3DPhysics()"
+        class="h-10 px-3 rounded-full tactile-island flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white tactile-pill-btn"
+        title="Toggle cursor interactive 3D gyroscope depth"
+      >
+        <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+        </svg>
+        <span class="text-[11px] font-medium hidden sm:inline" id="tilt-status-label">3D: On</span>
+      </button>
     </div>
 
-    <!-- Quick Tool Switcher Header Actions -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      <!-- Edit Mode Toggle -->
-      <button id="mode-toggle-btn" onclick="toggleDirectEditMode()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-300 transition active:scale-95">
-        <svg id="mode-icon-pen" class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+    <!-- Center Breadcrumb / Stats Chip -->
+    <div class="hidden lg:flex items-center h-9 px-4 rounded-full tactile-island text-[11px] font-ibm text-zinc-400 gap-3 pointer-events-auto">
+      <span class="flex items-center gap-1.5 text-zinc-300">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        <span id="stat-lines">19 lines</span>
+      </span>
+      <span class="text-zinc-600">/</span>
+      <span id="stat-chars">512 chars</span>
+      <span class="text-zinc-600">/</span>
+      <span class="text-indigo-400 font-semibold" id="stat-lang">TypeScript</span>
+    </div>
+
+    <!-- Right Quick Actions Deck -->
+    <div class="flex items-center gap-2 pointer-events-auto">
+      
+      <!-- Direct Edit Toggle -->
+      <button 
+        id="btn-edit-mode" 
+        onclick="toggleCodeEditModal()"
+        class="h-10 px-4 rounded-full tactile-island flex items-center gap-2 text-xs font-semibold text-zinc-200 tactile-pill-btn"
+      >
+        <svg class="w-3.5 h-3.5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
         </svg>
-        <span id="mode-text">Direct Edit</span>
+        <span>Edit Code</span>
       </button>
 
       <!-- Copy to Clipboard -->
-      <button onclick="copySnapshot()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-zinc-300 transition active:scale-95" title="Copy raw image to clipboard">
-        <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <button 
+        onclick="copyCardBitmap()"
+        class="h-10 px-4 rounded-full tactile-island flex items-center gap-2 text-xs font-semibold text-zinc-200 tactile-pill-btn"
+        title="Copy PNG to Clipboard"
+      >
+        <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
         </svg>
         <span class="hidden sm:inline">Copy</span>
       </button>
 
-      <!-- Export Button -->
-      <button onclick="exportSnapshot()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-noir-950 text-xs font-semibold shadow-sm hover:shadow transition active:scale-95">
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <!-- High-Res Export -->
+      <button 
+        onclick="renderSnapshot()"
+        class="h-10 px-5 rounded-full bg-white hover:bg-zinc-200 text-carbon-950 font-bold text-xs tracking-tight shadow-xl flex items-center gap-2 transition active:scale-95"
+      >
+        <svg class="w-3.5 h-3.5 text-carbon-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
-        <span>Export PNG</span>
+        <span>Export</span>
       </button>
     </div>
   </header>
 
-  <main class="flex-1 relative flex flex-col md:flex-row overflow-hidden bg-noir-950">
+  <!-- MAIN WORKSPACE STAGE -->
+  <main class="flex-1 relative studio-canvas-bg overflow-hidden flex items-center justify-center p-4 sm:p-10 perspective-stage" id="stage-viewport">
 
-    <!-- FLOATING FLOATING COMMAND DECK -->
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-2xl px-2 py-2 rounded-2xl bg-noir-900/80 backdrop-blur-2xl border border-white/10 shadow-2xl flex items-center justify-between gap-2 overflow-x-auto">
-      
-      <!-- Gradient / Backdrop Selector -->
-      <div class="flex items-center gap-1.5 pl-2">
-        <span class="text-[11px] font-mono text-zinc-400 uppercase tracking-wider hidden sm:inline mr-1">Theme</span>
-        <div class="flex items-center gap-1.5" id="preset-container">
-          <!-- Populated by JS -->
-        </div>
-      </div>
+    <!-- 3D Transform Rig Layer -->
+    <div id="card-3d-rig" class="relative max-w-full flex items-center justify-center">
 
-      <div class="h-4 w-[1px] bg-white/10 shrink-0"></div>
-
-      <!-- Quick Toggles Toolbar -->
-      <div class="flex items-center gap-1">
-        <!-- Syntax Highlighter Language Dropdown -->
-        <div class="relative">
-          <select id="lang-select" onchange="setLanguage(this.value)" class="bg-noir-850 hover:bg-noir-800 text-zinc-300 text-xs rounded-xl px-2.5 py-1.5 pr-6 border border-white/10 outline-none appearance-none cursor-pointer font-mono font-medium transition">
-            <option value="typescript">TypeScript</option>
-            <option value="javascript">JavaScript</option>
-            <option value="python">Python</option>
-            <option value="rust">Rust</option>
-            <option value="go">Go</option>
-            <option value="html">HTML</option>
-            <option value="css">CSS</option>
-            <option value="sql">SQL</option>
-            <option value="json">JSON</option>
-            <option value="shell">Bash</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-1.5 flex items-center text-zinc-400">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
+      <!-- The Real Export Target: High DPI container with zero clipping bugs -->
+      <div 
+        id="export-canvas-target" 
+        class="relative transition-all duration-300 flex items-center justify-center" 
+        style="padding: 56px; border-radius: 36px;"
+      >
+        <!-- The Dynamic Ambient Backdrop Layer -->
+        <div id="material-backdrop" class="absolute inset-0 rounded-[inherit] transition-all duration-500 overflow-hidden shadow-2xl">
+          <!-- Ambient Noise Texture -->
+          <div class="absolute inset-0 film-grain pointer-events-none opacity-40"></div>
+          <!-- Optional CRT scanlines -->
+          <div id="crt-layer" class="hidden absolute inset-0 scanlines pointer-events-none opacity-30"></div>
         </div>
 
-        <!-- Customizer Drawer Toggle Button -->
-        <button id="open-settings-btn" onclick="toggleInspectorDrawer()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-noir-850 hover:bg-noir-800 border border-white/10 text-xs font-medium text-zinc-300 transition">
-          <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-          <span class="hidden sm:inline">Format</span>
-        </button>
+        <!-- The Code Window Instrument Card -->
+        <div 
+          id="window-instrument" 
+          class="relative z-10 w-full min-w-[320px] sm:min-w-[460px] max-w-[760px] transition-all duration-200 rounded-[22px] overflow-hidden flex flex-col shadow-2xl"
+          style="background: rgba(9, 10, 15, 0.88); backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,0.12);"
+        >
+          <!-- Dynamic Specular Glare -->
+          <div class="glare-overlay" id="card-glare"></div>
 
-        <!-- Aspect Ratio Button -->
-        <button onclick="cycleAspectRatio()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-noir-850 hover:bg-noir-800 border border-white/10 text-xs font-mono text-zinc-300 transition">
-          <span id="aspect-ratio-label">Auto</span>
-        </button>
-      </div>
-    </div>
-
-    <section id="canvas-stage" class="flex-1 relative bg-dot-matrix overflow-auto flex items-center justify-center p-6 sm:p-12 pb-24 md:pb-12">
-      
-      <!-- Capture Wrapper: What gets exported to PNG -->
-      <div id="export-target" class="relative transition-all duration-300 flex items-center justify-center max-w-full" style="padding: 48px; border-radius: 24px;">
-        
-        <!-- Gradient Background Layer with optional Noise texture -->
-        <div id="backdrop-layer" class="absolute inset-0 rounded-[inherit] transition-all duration-500 overflow-hidden shadow-2xl">
-          <div class="absolute inset-0 noise-layer pointer-events-none"></div>
-        </div>
-
-        <!-- The Code Window Card -->
-        <div id="code-card" class="relative z-10 w-full min-w-[300px] sm:min-w-[440px] max-w-[720px] transition-all duration-200 border border-white/10 backdrop-blur-2xl shadow-card-glass rounded-2xl overflow-hidden flex flex-col bg-noir-950/85">
-          
-          <!-- Card Header / Titlebar -->
-          <div id="card-header" class="h-11 px-4 border-b border-white/[0.08] flex items-center justify-between select-none bg-white/[0.02]">
+          <!-- Chrome Header -->
+          <div id="card-titlebar" class="h-12 px-5 border-b border-white/[0.08] flex items-center justify-between select-none bg-white/[0.02]">
             
-            <!-- Window Controls -->
-            <div id="window-dots" class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/20 block transition-transform hover:scale-110"></span>
-              <span class="w-3 h-3 rounded-full bg-[#febc2e] border border-black/20 block transition-transform hover:scale-110"></span>
-              <span class="w-3 h-3 rounded-full bg-[#28c840] border border-black/20 block transition-transform hover:scale-110"></span>
+            <!-- Window Action Dots -->
+            <div class="flex items-center gap-2" id="window-dots-container">
+              <span class="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/20 block"></span>
+              <span class="w-3 h-3 rounded-full bg-[#febc2e] border border-black/20 block"></span>
+              <span class="w-3 h-3 rounded-full bg-[#28c840] border border-black/20 block"></span>
             </div>
 
-            <!-- Filename Input (Editable directly on the card!) -->
-            <input 
-              id="filename-input" 
-              type="text" 
-              value="rateLimiter.ts" 
-              spellcheck="false"
-              class="bg-transparent text-center font-mono text-[11px] text-zinc-400 font-medium tracking-tight outline-none border-b border-transparent hover:border-zinc-700 focus:border-indigo-500 focus:text-zinc-200 transition px-2 py-0.5 rounded truncate max-w-[240px]"
-              title="Click to rename snippet"
-            />
+            <!-- Filename Breadcrumb with in-place rename -->
+            <div class="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.04] border border-white/[0.05] hover:border-white/15 transition group">
+              <svg class="w-3 h-3 text-zinc-500 group-hover:text-zinc-300 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <input 
+                id="inline-filename-input" 
+                type="text" 
+                value="slidingWindow.ts" 
+                spellcheck="false"
+                class="bg-transparent font-ibm text-[11px] text-zinc-300 font-medium tracking-tight outline-none w-32 text-center focus:w-44 focus:text-white transition-all cursor-pointer"
+                title="Click to rename"
+              />
+            </div>
 
             <!-- Language Pill Tag -->
-            <div class="flex items-center gap-1.5">
-              <span id="card-lang-tag" class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-zinc-400 tracking-wider">
+            <div class="flex items-center gap-2">
+              <span id="window-lang-badge" class="text-[10px] font-ibm font-semibold uppercase px-2 py-0.5 rounded-full bg-white/[0.08] text-zinc-300 tracking-wider">
                 TS
               </span>
             </div>
           </div>
 
-          <!-- Code Window Body -->
-          <div class="relative p-5 overflow-hidden flex font-mono leading-relaxed" id="code-container-box">
+          <!-- Code Window Body Container -->
+          <div class="relative p-6 overflow-hidden flex font-jetbrains text-[13px] leading-relaxed" id="code-body-wrapper">
             
-            <!-- Line Numbers Column -->
-            <div id="line-numbers" class="select-none text-zinc-600 font-mono text-right shrink-0 pr-4 tabular-nums text-xs leading-relaxed border-r border-white/[0.06] mr-4"></div>
+            <!-- Dynamic Line Numbers -->
+            <div 
+              id="line-numbers-col" 
+              class="select-none text-zinc-600 font-ibm text-right shrink-0 pr-4 tabular-nums border-r border-white/[0.06] mr-4 space-y-0"
+            ></div>
 
-            <!-- Read / Output Render Area -->
-            <div id="code-output" class="flex-1 whitespace-pre overflow-x-auto text-xs leading-relaxed focus:outline-none"></div>
+            <!-- Syntax Render Target -->
+            <div id="code-output" class="flex-1 whitespace-pre overflow-x-auto focus:outline-none tracking-normal"></div>
 
-            <!-- Direct In-Place Code Editor Area (Toggled via button) -->
+            <!-- In-place Quick Editor Overlay (toggled via button) -->
             <textarea 
-              id="inline-textarea" 
-              spellcheck="false" 
-              autocomplete="off" 
-              autocorrect="off" 
+              id="raw-code-editor"
+              spellcheck="false"
+              autocomplete="off"
+              autocorrect="off"
               autocapitalize="off"
-              class="hidden absolute inset-0 z-20 w-full h-full p-5 bg-noir-950 font-mono text-xs text-zinc-200 outline-none resize-none leading-relaxed overflow-x-auto border-none"
+              class="hidden absolute inset-0 z-20 w-full h-full p-6 bg-carbon-950 font-jetbrains text-[13px] text-zinc-200 outline-none resize-none leading-relaxed overflow-x-auto"
             ></textarea>
           </div>
 
-          <!-- Card Bottom Watermark / Signature -->
-          <div id="card-footer" class="px-4 py-2 border-t border-white/[0.04] bg-white/[0.01] flex items-center justify-between text-[10px] font-mono text-zinc-500">
-            <span class="flex items-center gap-1.5 opacity-60">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              <span>Nimbus Studio</span>
-            </span>
-            <span class="opacity-40">UTF-8</span>
+          <!-- Futuristic Clean Watermark Footer -->
+          <div id="card-footer-bar" class="px-5 py-2.5 border-t border-white/[0.05] bg-white/[0.015] flex items-center justify-between text-[10px] font-ibm text-zinc-400">
+            <div class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_8px_#818cf8]"></div>
+              <span class="tracking-widest uppercase font-semibold text-zinc-400">Nimbus Spatial</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-zinc-400" id="card-font-name">JetBrains Mono</span>
+              <span class="text-zinc-700">|</span>
+              <span class="text-zinc-400 uppercase tracking-wider">UTF-8</span>
+            </div>
           </div>
 
         </div>
 
       </div>
 
-    </section>
-
-    <!-- Slide-over Inspector Panel -->
-    <aside id="inspector-panel" class="fixed md:static inset-y-0 right-0 z-40 w-80 bg-noir-900 border-l border-white/[0.08] flex flex-col transform translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none">
-      
-      <!-- Panel Header -->
-      <div class="h-14 border-b border-white/[0.06] px-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-          </svg>
-          <span class="text-xs font-semibold text-white uppercase tracking-wider">Canvas Settings</span>
-        </div>
-        <button onclick="toggleInspectorDrawer()" class="md:hidden text-zinc-400 hover:text-white p-1 rounded-lg">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <!-- Settings Content -->
-      <div class="flex-1 overflow-y-auto p-5 space-y-6">
-
-        <!-- Syntax Color Themes -->
-        <div>
-          <label class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2.5">Syntax Highlight</label>
-          <div class="grid grid-cols-2 gap-2" id="syntax-theme-options">
-            <button onclick="setSyntaxTheme('atom-one-dark', '#0e0e12', '#abb2bf', this)" class="theme-select-btn active-theme px-3 py-2 rounded-xl bg-white/[0.05] border border-indigo-500/50 text-left text-xs font-medium text-white flex items-center justify-between">
-              <span>One Dark</span>
-              <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
-            </button>
-            <button onclick="setSyntaxTheme('tokyo-night-dark', '#1a1b26', '#a9b1d6', this)" class="theme-select-btn px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
-              <span>Tokyo Night</span>
-              <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-            </button>
-            <button onclick="setSyntaxTheme('github-dark', '#0d1117', '#c9d1d9', this)" class="theme-select-btn px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
-              <span>GitHub Noir</span>
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            </button>
-            <button onclick="setSyntaxTheme('nord', '#2e3440', '#d8dee9', this)" class="theme-select-btn px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-left text-xs font-medium text-zinc-400 hover:text-white flex items-center justify-between">
-              <span>Nord Frost</span>
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Window Chrome Style -->
-        <div>
-          <label class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2.5">Window Chrome</label>
-          <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-noir-850 border border-white/5">
-            <button onclick="setWindowHeaderStyle('mac')" id="btn-hdr-mac" class="py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center">macOS</button>
-            <button onclick="setWindowHeaderStyle('minimal')" id="btn-hdr-min" class="py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center">Dots</button>
-            <button onclick="setWindowHeaderStyle('none')" id="btn-hdr-none" class="py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center">Plain</button>
-          </div>
-        </div>
-
-        <!-- Sliders Group -->
-        <div class="space-y-4 pt-2 border-t border-white/[0.06]">
-          <!-- Canvas Padding -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Canvas Padding</span>
-              <span id="val-padding" class="font-mono text-zinc-300">48px</span>
-            </div>
-            <input type="range" min="16" max="96" value="48" class="w-full" oninput="setOption('padding', this.value)">
-          </div>
-
-          <!-- Font Size -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Font Scale</span>
-              <span id="val-font" class="font-mono text-zinc-300">13px</span>
-            </div>
-            <input type="range" min="11" max="20" value="13" class="w-full" oninput="setOption('fontSize', this.value)">
-          </div>
-
-          <!-- Window Radius -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Corner Smoothness</span>
-              <span id="val-radius" class="font-mono text-zinc-300">16px</span>
-            </div>
-            <input type="range" min="4" max="32" value="16" class="w-full" oninput="setOption('radius', this.value)">
-          </div>
-
-          <!-- Glass Blur Opacity -->
-          <div>
-            <div class="flex justify-between items-center text-xs mb-1.5">
-              <span class="text-zinc-400 font-medium">Glass Opacity</span>
-              <span id="val-opacity" class="font-mono text-zinc-300">85%</span>
-            </div>
-            <input type="range" min="40" max="100" value="85" class="w-full" oninput="setOption('opacity', this.value)">
-          </div>
-        </div>
-
-        <!-- Visibility Switches -->
-        <div class="space-y-3 pt-3 border-t border-white/[0.06]">
-          <!-- Line Numbers -->
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-zinc-300 font-medium">Show Line Numbers</span>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="chk-linenums" checked onchange="setOption('showLineNumbers', this.checked)" class="sr-only peer">
-              <div class="w-8 h-4 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-500"></div>
-            </label>
-          </div>
-
-          <!-- Watermark -->
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-zinc-300 font-medium">Card Watermark</span>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="chk-watermark" checked onchange="setOption('showWatermark', this.checked)" class="sr-only peer">
-              <div class="w-8 h-4 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-500"></div>
-            </label>
-          </div>
-        </div>
-
-      </div>
-
-    </aside>
+    </div>
 
   </main>
 
-  <!-- Shutter Flash Animation -->
-  <div id="flash-overlay" class="fixed inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-150 z-50"></div>
-
-  <!-- Sleek Floating Toast -->
-  <div id="toast-banner" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-noir-850/90 text-white text-xs font-medium border border-white/10 shadow-2xl backdrop-blur-xl opacity-0 -translate-y-2 pointer-events-none transition-all duration-200 flex items-center gap-2">
-    <div id="toast-icon-wrapper" class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
+  <!-- BOTTOM FLOATING STUDIO ISLAND -->
+  <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-4xl px-3 py-2.5 rounded-2xl tactile-island flex items-center justify-between gap-3 overflow-x-auto">
+    
+    <!-- Material Palette Preset Swatches -->
+    <div class="flex items-center gap-1.5 shrink-0 pl-1" id="material-presets-list">
+      <!-- Populated dynamically via JS -->
     </div>
-    <span id="toast-message">Copied to clipboard</span>
+
+    <div class="h-5 w-[1px] bg-white/10 shrink-0"></div>
+
+    <!-- Quick Micro Controls -->
+    <div class="flex items-center gap-2 shrink-0">
+      
+      <!-- Font Family Switcher -->
+      <div class="relative">
+        <select 
+          id="font-select" 
+          onchange="setFontFamily(this.value)" 
+          class="bg-white/[0.05] hover:bg-white/[0.08] text-zinc-300 text-xs rounded-xl px-2.5 py-1.5 pr-6 border border-white/10 outline-none appearance-none cursor-pointer font-ibm font-medium transition"
+        >
+          <option value="jetbrains">JetBrains Mono</option>
+          <option value="fira">Fira Code</option>
+          <option value="ibm">IBM Plex Mono</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-1.5 flex items-center text-zinc-500">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- Syntax Language Selector -->
+      <div class="relative">
+        <select 
+          id="language-select" 
+          onchange="setSnippetLanguage(this.value)" 
+          class="bg-white/[0.05] hover:bg-white/[0.08] text-zinc-300 text-xs rounded-xl px-2.5 py-1.5 pr-6 border border-white/10 outline-none appearance-none cursor-pointer font-ibm font-medium transition"
+        >
+          <option value="typescript">TypeScript</option>
+          <option value="javascript">JavaScript</option>
+          <option value="python">Python</option>
+          <option value="rust">Rust</option>
+          <option value="go">Go</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="sql">SQL</option>
+          <option value="json">JSON</option>
+          <option value="shell">Bash</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-1.5 flex items-center text-zinc-500">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- Aspect Ratio Button -->
+      <button 
+        onclick="cycleRatio()" 
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 text-xs font-ibm text-zinc-300 tactile-pill-btn"
+      >
+        <span class="text-zinc-500">Ratio:</span>
+        <span id="aspect-ratio-text" class="text-zinc-200 font-semibold">Auto</span>
+      </button>
+
+      <!-- Advanced Studio Inspector Drawer Toggle -->
+      <button 
+        onclick="toggleInspectorModal()"
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 text-xs font-medium text-indigo-300 tactile-pill-btn"
+      >
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+        </svg>
+        <span>Fine-tune</span>
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- PRECISION INSPECTOR MODAL DRAWER -->
+  <div 
+    id="inspector-modal" 
+    class="fixed inset-y-0 right-0 z-50 w-88 max-w-full bg-carbon-900/95 border-l border-white/10 backdrop-blur-3xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl"
+  >
+    <!-- Drawer Title -->
+    <div class="h-16 px-6 border-b border-white/[0.08] flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-indigo-400"></div>
+        <span class="text-xs font-bold uppercase tracking-wider text-white font-ibm">Studio Parameters</span>
+      </div>
+      <button onclick="toggleInspectorModal()" class="text-zinc-400 hover:text-white p-1 rounded-lg">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Sliders and Micro Settings -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-6 text-xs">
+      
+      <!-- Window Chrome Style -->
+      <div>
+        <label class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2 font-ibm">Window Chrome</label>
+        <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-carbon-850 border border-white/10">
+          <button onclick="setChromeStyle('mac')" id="btn-chrome-mac" class="py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center">macOS</button>
+          <button onclick="setChromeStyle('minimal')" id="btn-chrome-min" class="py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center">Mono</button>
+          <button onclick="setChromeStyle('none')" id="btn-chrome-none" class="py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center">Clean</button>
+        </div>
+      </div>
+
+      <!-- Syntax Highlighting Colorway -->
+      <div>
+        <label class="block text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2 font-ibm">Syntax Theme</label>
+        <div class="grid grid-cols-2 gap-2" id="syntax-themes-rack">
+          <!-- Handled in JS -->
+        </div>
+      </div>
+
+      <!-- Range Controls -->
+      <div class="space-y-4 pt-2 border-t border-white/[0.08]">
+        
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-zinc-300 font-medium">Canvas Padding</span>
+            <span id="label-val-pad" class="font-ibm text-zinc-400">56px</span>
+          </div>
+          <input type="range" min="16" max="96" value="56" class="w-full" oninput="updateParam('padding', this.value)">
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-zinc-300 font-medium">Font Scale</span>
+            <span id="label-val-font" class="font-ibm text-zinc-400">13px</span>
+          </div>
+          <input type="range" min="11" max="18" value="13" class="w-full" oninput="updateParam('fontSize', this.value)">
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-zinc-300 font-medium">Corner Curvature</span>
+            <span id="label-val-rad" class="font-ibm text-zinc-400">22px</span>
+          </div>
+          <input type="range" min="6" max="36" value="22" class="w-full" oninput="updateParam('radius', this.value)">
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-zinc-300 font-medium">Card Translucency</span>
+            <span id="label-val-opac" class="font-ibm text-zinc-400">88%</span>
+          </div>
+          <input type="range" min="40" max="100" value="88" class="w-full" oninput="updateParam('opacity', this.value)">
+        </div>
+
+      </div>
+
+      <!-- Functional Toggles -->
+      <div class="space-y-3 pt-3 border-t border-white/[0.08]">
+        <div class="flex items-center justify-between">
+          <span class="text-zinc-300 font-medium">Line Numbers</span>
+          <input type="checkbox" id="chk-lines" checked onchange="updateParam('showLines', this.checked)" class="accent-indigo-500 w-4 h-4 cursor-pointer">
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-zinc-300 font-medium">Studio Signature</span>
+          <input type="checkbox" id="chk-foot" checked onchange="updateParam('showFooter', this.checked)" class="accent-indigo-500 w-4 h-4 cursor-pointer">
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-zinc-300 font-medium">CRT Retro Scanlines</span>
+          <input type="checkbox" id="chk-crt" onchange="updateParam('crtMode', this.checked)" class="accent-indigo-500 w-4 h-4 cursor-pointer">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tactile Shutter Flash Notification -->
+  <div id="shutter-flash" class="fixed inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-150 z-50"></div>
+
+  <!-- Dynamic Notification Pill -->
+  <div 
+    id="dynamic-toast" 
+    class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full tactile-island text-white text-xs font-medium opacity-0 -translate-y-3 pointer-events-none transition-all duration-300 flex items-center gap-2.5"
+  >
+    <div class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]"></div>
+    <span id="toast-msg">Image generated</span>
   </div>
 
   <script>
-    // Curated high-aesthetic background gradient meshes
-    const BACKGROUND_PRESETS = [
+    // Curated high-aesthetic spatial materials
+    const SPATIAL_MATERIALS = [
       {
-        id: 'aurora-violet',
-        name: 'Aurora',
-        style: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 45%, #ec4899 100%)'
+        id: 'acrylic-aurora',
+        name: 'Aurora Acrylic',
+        style: 'radial-gradient(circle at 10% 20%, #4338ca 0%, transparent 40%), radial-gradient(circle at 90% 80%, #ec4899 0%, transparent 40%), linear-gradient(135deg, #090910 0%, #17112c 100%)',
+        border: 'rgba(255, 255, 255, 0.16)'
       },
       {
-        id: 'cyber-prism',
-        name: 'Prism',
-        style: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%)'
+        id: 'deep-prism',
+        name: 'Cyan Prism',
+        style: 'radial-gradient(circle at 20% 30%, #0284c7 0%, transparent 45%), radial-gradient(circle at 80% 70%, #6366f1 0%, transparent 45%), linear-gradient(135deg, #050a14 0%, #091322 100%)',
+        border: 'rgba(56, 189, 248, 0.25)'
       },
       {
-        id: 'tokyo-sunset',
-        name: 'Sunset',
-        style: 'linear-gradient(135deg, #f97316 0%, #f43f5e 50%, #a855f7 100%)'
+        id: 'tokyo-neon',
+        name: 'Neo Tokyo',
+        style: 'radial-gradient(circle at 75% 15%, #f43f5e 0%, transparent 50%), radial-gradient(circle at 25% 85%, #8b5cf6 0%, transparent 50%), linear-gradient(135deg, #0f051d 0%, #09030e 100%)',
+        border: 'rgba(244, 63, 94, 0.25)'
+      },
+      {
+        id: 'swiss-mono',
+        name: 'Swiss Brutal',
+        style: 'linear-gradient(135deg, #1c1d22 0%, #0d0e12 100%)',
+        border: 'rgba(255, 255, 255, 0.2)'
       },
       {
         id: 'emerald-abyss',
-        name: 'Emerald',
-        style: 'linear-gradient(135deg, #059669 0%, #0d9488 50%, #0284c7 100%)'
+        name: 'Emerald Matrix',
+        style: 'radial-gradient(circle at 30% 20%, #059669 0%, transparent 45%), radial-gradient(circle at 80% 80%, #0d9488 0%, transparent 45%), linear-gradient(135deg, #03120e 0%, #06070a 100%)',
+        border: 'rgba(16, 185, 129, 0.25)'
       },
       {
-        id: 'glass-noir',
-        name: 'OLED Noir',
-        style: 'linear-gradient(135deg, #18181b 0%, #09090b 100%)'
-      },
-      {
-        id: 'frost-titanium',
-        name: 'Silver',
-        style: 'linear-gradient(135deg, #334155 0%, #1e293b 50%, #0f172a 100%)'
+        id: 'oled-silk',
+        name: 'OLED Silk',
+        style: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%), #000000',
+        border: 'rgba(255, 255, 255, 0.09)'
       }
     ];
 
-    const ASPECT_RATIOS = ['Auto', '16:9', '1:1', '4:5'];
-    let aspectIndex = 0;
+    const SYNTAX_THEMES = [
+      { id: 'atom-one-dark', name: 'One Dark', bg: '#090a0f', color: '#abb2bf' },
+      { id: 'tokyo-night-dark', name: 'Tokyo Night', bg: '#10111a', color: '#a9b1d6' },
+      { id: 'github-dark', name: 'GitHub Noir', bg: '#080c10', color: '#c9d1d9' },
+      { id: 'nord', name: 'Nord Frost', bg: '#1a1f29', color: '#d8dee9' }
+    ];
 
-    const SAMPLE_CODE = `// High-throughput sliding-window rate limiter
+    const RATIOS = ['Auto', '16:9', '1:1', '4:5'];
+    let ratioIndex = 0;
+
+    const DEFAULT_SNIPPET = `// High-throughput sliding-window rate limiter
 import { Redis } from "@upstash/redis";
 
 export class RateLimiter {
@@ -491,318 +631,369 @@ export class RateLimiter {
   }
 }`;
 
-    // Application State Object
-    const appState = {
-      code: SAMPLE_CODE,
-      language: 'typescript',
-      filename: 'rateLimiter.ts',
-      presetId: 'aurora-violet',
+    // Reactive State
+    const state = {
+      code: DEFAULT_SNIPPET,
+      lang: 'typescript',
+      filename: 'slidingWindow.ts',
+      materialId: 'acrylic-aurora',
       syntaxTheme: 'atom-one-dark',
-      cardBg: '#0e0e12',
-      cardTextColor: '#abb2bf',
-      padding: 48,
+      fontFamily: 'jetbrains',
+      padding: 56,
       fontSize: 13,
-      radius: 16,
-      opacity: 85,
+      radius: 22,
+      opacity: 88,
       chromeStyle: 'mac',
-      showLineNumbers: true,
-      showWatermark: true,
-      isEditingDirectly: false,
-      aspectRatio: 'Auto'
+      showLines: true,
+      showFooter: true,
+      crtMode: false,
+      physics3D: true,
+      isEditing: false,
+      cardBg: '#090a0f',
+      cardColor: '#abb2bf'
     };
 
-    // DOM Elements Cache
-    const exportTarget = document.getElementById('export-target');
-    const backdropLayer = document.getElementById('backdrop-layer');
-    const codeCard = document.getElementById('code-card');
+    // DOM Elements
+    const cardRig = document.getElementById('card-3d-rig');
+    const stageViewport = document.getElementById('stage-viewport');
+    const exportTarget = document.getElementById('export-canvas-target');
+    const materialBackdrop = document.getElementById('material-backdrop');
+    const windowInstrument = document.getElementById('window-instrument');
+    const cardGlare = document.getElementById('card-glare');
     const codeOutput = document.getElementById('code-output');
-    const lineNumbers = document.getElementById('line-numbers');
-    const inlineTextarea = document.getElementById('inline-textarea');
-    const filenameInput = document.getElementById('filename-input');
-    const cardLangTag = document.getElementById('card-lang-tag');
-    const cardHeader = document.getElementById('card-header');
-    const cardFooter = document.getElementById('card-footer');
-    const windowDots = document.getElementById('window-dots');
+    const lineNumbersCol = document.getElementById('line-numbers-col');
+    const rawCodeEditor = document.getElementById('raw-code-editor');
+    const inlineFilename = document.getElementById('inline-filename-input');
+    const langBadge = document.getElementById('window-lang-badge');
+    const crtLayer = document.getElementById('crt-layer');
+    const dotsContainer = document.getElementById('window-dots-container');
+    const footerBar = document.getElementById('card-footer-bar');
+    const cardFontName = document.getElementById('card-font-name');
     const hljsTheme = document.getElementById('hljs-theme');
-    const langSelect = document.getElementById('lang-select');
-    const modeToggleBtn = document.getElementById('mode-toggle-btn');
-    const modeText = document.getElementById('mode-text');
+    const tiltStatusLabel = document.getElementById('tilt-status-label');
 
-    // Build gradient swatches
-    function renderBackdropSwatches() {
-      const container = document.getElementById('preset-container');
+    // Build Material Swatches
+    function renderMaterialSwatches() {
+      const container = document.getElementById('material-presets-list');
       container.innerHTML = '';
-
-      BACKGROUND_PRESETS.forEach(preset => {
+      SPATIAL_MATERIALS.forEach(mat => {
         const btn = document.createElement('button');
-        const isActive = appState.presetId === preset.id;
-        btn.className = `w-6 h-6 rounded-full transition-all duration-200 border-2 ${
-          isActive ? 'border-white scale-110 shadow-glow' : 'border-white/10 hover:border-white/40 hover:scale-105'
+        const active = state.materialId === mat.id;
+        btn.className = `w-7 h-7 rounded-full transition-all duration-200 border-2 ${
+          active ? 'border-white scale-110 shadow-[0_0_15px_rgba(255,255,255,0.4)]' : 'border-white/10 hover:border-white/40 hover:scale-105'
         }`;
-        btn.style.background = preset.style;
-        btn.title = preset.name;
-        btn.onclick = () => selectBackdrop(preset.id);
+        btn.style.background = mat.style;
+        btn.title = mat.name;
+        btn.onclick = () => selectMaterial(mat.id);
         container.appendChild(btn);
       });
     }
 
-    function selectBackdrop(id) {
-      appState.presetId = id;
-      const found = BACKGROUND_PRESETS.find(p => p.id === id);
+    function selectMaterial(id) {
+      state.materialId = id;
+      const found = SPATIAL_MATERIALS.find(m => m.id === id);
       if (found) {
-        backdropLayer.style.background = found.style;
+        materialBackdrop.style.background = found.style;
+        materialBackdrop.style.border = `1px solid ${found.border}`;
       }
-      renderBackdropSwatches();
+      renderMaterialSwatches();
     }
 
-    function renderCode() {
-      const text = appState.code;
+    // Build Syntax Theme Buttons in Inspector
+    function renderThemeOptions() {
+      const container = document.getElementById('syntax-themes-rack');
+      container.innerHTML = '';
+      SYNTAX_THEMES.forEach(t => {
+        const active = state.syntaxTheme === t.id;
+        const btn = document.createElement('button');
+        btn.className = `px-3 py-2 rounded-xl text-left text-xs font-ibm transition flex items-center justify-between border ${
+          active ? 'bg-white/10 border-indigo-400 text-white' : 'bg-white/[0.03] border-white/5 text-zinc-400 hover:text-white'
+        }`;
+        btn.innerHTML = `<span>${t.name}</span><span class="w-1.5 h-1.5 rounded-full ${active ? 'bg-indigo-400' : 'bg-zinc-600'}"></span>`;
+        btn.onclick = () => setSyntaxTheme(t);
+        container.appendChild(btn);
+      });
+    }
+
+    function setSyntaxTheme(themeObj) {
+      state.syntaxTheme = themeObj.id;
+      state.cardBg = themeObj.bg;
+      state.cardColor = themeObj.color;
+      hljsTheme.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeObj.id}.min.css`;
+      
+      const alphaHex = Math.round((state.opacity / 100) * 255).toString(16).padStart(2, '0');
+      windowInstrument.style.background = `${themeObj.bg}${alphaHex}`;
+      codeOutput.style.color = themeObj.color;
+      
+      renderThemeOptions();
+      setTimeout(renderHighlightedCode, 30);
+    }
+
+    function renderHighlightedCode() {
+      const text = state.code;
       const lines = text.split('\n');
 
-      // Update line numbering
-      if (appState.showLineNumbers) {
-        lineNumbers.style.display = 'block';
-        lineNumbers.textContent = lines.map((_, i) => i + 1).join('\n');
+      // Update lines count
+      document.getElementById('stat-lines').textContent = `${lines.length} lines`;
+      document.getElementById('stat-chars').textContent = `${text.length} chars`;
+
+      // Render line numbers
+      if (state.showLines) {
+        lineNumbersCol.style.display = 'block';
+        lineNumbersCol.innerHTML = lines.map((_, i) => `
+          <div class="cursor-pointer hover:text-zinc-300 transition" onclick="toggleLineFocus(${i})">${i + 1}</div>
+        `).join('');
       } else {
-        lineNumbers.style.display = 'none';
+        lineNumbersCol.style.display = 'none';
       }
 
       // Syntax highlight
       try {
-        const highlighted = hljs.highlight(text, {
-          language: appState.language,
+        const res = hljs.highlight(text, {
+          language: state.lang,
           ignoreIllegals: true
         });
-        codeOutput.innerHTML = `<pre><code class="hljs">${highlighted.value}</code></pre>`;
-      } catch (e) {
-        // Fallback for custom or unknown formats
+        codeOutput.innerHTML = `<pre><code class="hljs">${res.value}</code></pre>`;
+      } catch (err) {
         const safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         codeOutput.innerHTML = `<pre><code class="hljs">${safe}</code></pre>`;
       }
 
-      // Sync language tag badge
-      cardLangTag.textContent = getLangBadge(appState.language);
+      // Sync language badges
+      langBadge.textContent = state.lang.slice(0, 3).toUpperCase();
+      document.getElementById('stat-lang').textContent = state.lang;
     }
 
-    function getLangBadge(lang) {
-      const badges = {
-        typescript: 'TS',
-        javascript: 'JS',
-        python: 'PY',
-        rust: 'RS',
-        go: 'GO',
-        html: 'HTML',
-        css: 'CSS',
-        sql: 'SQL',
-        json: 'JSON',
-        shell: 'SH'
-      };
-      return badges[lang] || lang.slice(0, 3).toUpperCase();
-    }
-
-    function setLanguage(lang) {
-      appState.language = lang;
-      renderCode();
-    }
-
-    // Toggle In-place Direct Editing Mode
-    function toggleDirectEditMode() {
-      appState.isEditingDirectly = !appState.isEditingDirectly;
-
-      if (appState.isEditingDirectly) {
-        inlineTextarea.value = appState.code;
-        inlineTextarea.classList.remove('hidden');
-        inlineTextarea.focus();
-        modeToggleBtn.classList.add('bg-indigo-600', 'text-white', 'border-indigo-400');
-        modeToggleBtn.classList.remove('bg-white/[0.04]', 'text-zinc-300');
-        modeText.textContent = "Done Editing";
-      } else {
-        appState.code = inlineTextarea.value;
-        inlineTextarea.classList.add('hidden');
-        modeToggleBtn.classList.remove('bg-indigo-600', 'text-white', 'border-indigo-400');
-        modeToggleBtn.classList.add('bg-white/[0.04]', 'text-zinc-300');
-        modeText.textContent = "Direct Edit";
-        renderCode();
+    function toggleLineFocus(lineIndex) {
+      const pre = codeOutput.querySelector('pre');
+      if (!pre) return;
+      const lines = pre.innerHTML.split('\n');
+      if (lines[lineIndex]) {
+        showDynamicToast(`Bookmarked line ${lineIndex + 1}`);
       }
     }
 
-    // Sync textarea changes in real-time
-    inlineTextarea.addEventListener('input', (e) => {
-      appState.code = e.target.value;
-      renderCode();
+    function setFontFamily(fontKey) {
+      state.fontFamily = fontKey;
+      const fontClasses = {
+        jetbrains: 'font-jetbrains',
+        fira: 'font-fira',
+        ibm: 'font-ibm'
+      };
+      const fontLabels = {
+        jetbrains: 'JetBrains Mono',
+        fira: 'Fira Code',
+        ibm: 'IBM Plex Mono'
+      };
+
+      const wrapper = document.getElementById('code-body-wrapper');
+      wrapper.className = wrapper.className.replace(/font-\w+/g, '');
+      wrapper.classList.add(fontClasses[fontKey]);
+      cardFontName.textContent = fontLabels[fontKey];
+    }
+
+    function setSnippetLanguage(lang) {
+      state.lang = lang;
+      renderHighlightedCode();
+    }
+
+    function toggleCodeEditModal() {
+      state.isEditing = !state.isEditing;
+      const editBtn = document.getElementById('btn-edit-mode');
+
+      if (state.isEditing) {
+        rawCodeEditor.value = state.code;
+        rawCodeEditor.classList.remove('hidden');
+        rawCodeEditor.focus();
+        editBtn.classList.add('bg-indigo-600', 'text-white');
+        editBtn.querySelector('span').textContent = 'Done';
+      } else {
+        state.code = rawCodeEditor.value;
+        rawCodeEditor.classList.add('hidden');
+        editBtn.classList.remove('bg-indigo-600', 'text-white');
+        editBtn.querySelector('span').textContent = 'Edit Code';
+        renderHighlightedCode();
+      }
+    }
+
+    rawCodeEditor.addEventListener('input', (e) => {
+      state.code = e.target.value;
+      renderHighlightedCode();
     });
 
     // Support indent with tab key
-    inlineTextarea.addEventListener('keydown', (e) => {
+    rawCodeEditor.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
-        const start = inlineTextarea.selectionStart;
-        const end = inlineTextarea.selectionEnd;
-        inlineTextarea.value = inlineTextarea.value.substring(0, start) + '  ' + inlineTextarea.value.substring(end);
-        inlineTextarea.selectionStart = inlineTextarea.selectionEnd = start + 2;
-        appState.code = inlineTextarea.value;
-        renderCode();
+        const start = rawCodeEditor.selectionStart;
+        const end = rawCodeEditor.selectionEnd;
+        rawCodeEditor.value = rawCodeEditor.value.substring(0, start) + '  ' + rawCodeEditor.value.substring(end);
+        rawCodeEditor.selectionStart = rawCodeEditor.selectionEnd = start + 2;
+        state.code = rawCodeEditor.value;
+        renderHighlightedCode();
       }
     });
 
-    // Filename change listener
-    filenameInput.addEventListener('input', (e) => {
-      appState.filename = e.target.value || 'untitled';
+    inlineFilename.addEventListener('input', (e) => {
+      state.filename = e.target.value || 'untitled';
     });
 
-    function setOption(key, val) {
-      appState[key] = val;
+    function updateParam(key, val) {
+      state[key] = val;
 
       if (key === 'padding') {
         exportTarget.style.padding = `${val}px`;
-        document.getElementById('val-padding').textContent = `${val}px`;
+        document.getElementById('label-val-pad').textContent = `${val}px`;
       } else if (key === 'fontSize') {
         codeOutput.style.fontSize = `${val}px`;
-        lineNumbers.style.fontSize = `${val}px`;
-        inlineTextarea.style.fontSize = `${val}px`;
-        document.getElementById('val-font').textContent = `${val}px`;
+        lineNumbersCol.style.fontSize = `${val}px`;
+        rawCodeEditor.style.fontSize = `${val}px`;
+        document.getElementById('label-val-font').textContent = `${val}px`;
       } else if (key === 'radius') {
-        codeCard.style.borderRadius = `${val}px`;
-        document.getElementById('val-radius').textContent = `${val}px`;
+        windowInstrument.style.borderRadius = `${val}px`;
+        document.getElementById('label-val-rad').textContent = `${val}px`;
       } else if (key === 'opacity') {
-        const hexAlpha = Math.round((val / 100) * 255).toString(16).padStart(2, '0');
-        codeCard.style.backgroundColor = `${appState.cardBg}${hexAlpha}`;
-        document.getElementById('val-opacity').textContent = `${val}%`;
-      } else if (key === 'showLineNumbers') {
-        renderCode();
-      } else if (key === 'showWatermark') {
-        cardFooter.style.display = val ? 'flex' : 'none';
+        const alphaHex = Math.round((val / 100) * 255).toString(16).padStart(2, '0');
+        windowInstrument.style.background = `${state.cardBg}${alphaHex}`;
+        document.getElementById('label-val-opac').textContent = `${val}%`;
+      } else if (key === 'showLines') {
+        renderHighlightedCode();
+      } else if (key === 'showFooter') {
+        footerBar.style.display = val ? 'flex' : 'none';
+      } else if (key === 'crtMode') {
+        crtLayer.classList.toggle('hidden', !val);
       }
     }
 
-    function setSyntaxTheme(themeName, bgColor, textColor, btnEl) {
-      appState.syntaxTheme = themeName;
-      appState.cardBg = bgColor;
-      appState.cardTextColor = textColor;
+    function setChromeStyle(style) {
+      state.chromeStyle = style;
+      const bMac = document.getElementById('btn-chrome-mac');
+      const bMin = document.getElementById('btn-chrome-min');
+      const bNone = document.getElementById('btn-chrome-none');
 
-      hljsTheme.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeName}.min.css`;
-
-      const hexAlpha = Math.round((appState.opacity / 100) * 255).toString(16).padStart(2, '0');
-      codeCard.style.backgroundColor = `${bgColor}${hexAlpha}`;
-      codeOutput.style.color = textColor;
-
-      document.querySelectorAll('.theme-select-btn').forEach(btn => {
-        btn.classList.remove('border-indigo-500/50', 'bg-white/[0.05]');
-        btn.classList.add('border-white/5', 'bg-white/[0.02]');
-      });
-      if (btnEl) {
-        btnEl.classList.add('border-indigo-500/50', 'bg-white/[0.05]');
-        btnEl.classList.remove('border-white/5');
-      }
-
-      setTimeout(renderCode, 50);
-    }
-
-    function setWindowHeaderStyle(style) {
-      appState.chromeStyle = style;
-      const btnMac = document.getElementById('btn-hdr-mac');
-      const btnMin = document.getElementById('btn-hdr-min');
-      const btnNone = document.getElementById('btn-hdr-none');
-
-      [btnMac, btnMin, btnNone].forEach(b => {
+      [bMac, bMin, bNone].forEach(b => {
         b.className = "py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition text-center";
       });
 
+      const header = document.getElementById('card-titlebar');
+
       if (style === 'mac') {
-        cardHeader.style.display = 'flex';
-        windowDots.innerHTML = `
+        header.style.display = 'flex';
+        dotsContainer.innerHTML = `
           <span class="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/20 block"></span>
           <span class="w-3 h-3 rounded-full bg-[#febc2e] border border-black/20 block"></span>
           <span class="w-3 h-3 rounded-full bg-[#28c840] border border-black/20 block"></span>
         `;
-        btnMac.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
+        bMac.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
       } else if (style === 'minimal') {
-        cardHeader.style.display = 'flex';
-        windowDots.innerHTML = `
+        header.style.display = 'flex';
+        dotsContainer.innerHTML = `
           <span class="w-2.5 h-2.5 rounded-full bg-zinc-600 block"></span>
           <span class="w-2.5 h-2.5 rounded-full bg-zinc-600 block"></span>
           <span class="w-2.5 h-2.5 rounded-full bg-zinc-600 block"></span>
         `;
-        btnMin.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
+        bMin.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
       } else {
-        cardHeader.style.display = 'none';
-        btnNone.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
+        header.style.display = 'none';
+        bNone.className = "py-1.5 text-xs font-medium text-white rounded-lg bg-white/10 transition text-center";
       }
     }
 
-    function cycleAspectRatio() {
-      aspectIndex = (aspectIndex + 1) % ASPECT_RATIOS.length;
-      const ratio = ASPECT_RATIOS[aspectIndex];
-      appState.aspectRatio = ratio;
-      document.getElementById('aspect-ratio-label').textContent = ratio;
+    function cycleRatio() {
+      ratioIndex = (ratioIndex + 1) % RATIOS.length;
+      const ratio = RATIOS[ratioIndex];
+      document.getElementById('aspect-ratio-text').textContent = ratio;
 
-      if (ratio === '16:9') {
-        codeCard.style.aspectRatio = '16 / 9';
-      } else if (ratio === '1:1') {
-        codeCard.style.aspectRatio = '1 / 1';
-      } else if (ratio === '4:5') {
-        codeCard.style.aspectRatio = '4 / 5';
-      } else {
-        codeCard.style.aspectRatio = 'auto';
+      if (ratio === '16:9') windowInstrument.style.aspectRatio = '16 / 9';
+      else if (ratio === '1:1') windowInstrument.style.aspectRatio = '1 / 1';
+      else if (ratio === '4:5') windowInstrument.style.aspectRatio = '4 / 5';
+      else windowInstrument.style.aspectRatio = 'auto';
+    }
+
+    function toggleInspectorModal() {
+      const modal = document.getElementById('inspector-modal');
+      modal.classList.toggle('translate-x-full');
+    }
+
+    function toggle3DPhysics() {
+      state.physics3D = !state.physics3D;
+      tiltStatusLabel.textContent = state.physics3D ? '3D: On' : '3D: Off';
+      if (!state.physics3D) {
+        cardRig.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+        cardGlare.style.setProperty('--glare-opacity', 0);
       }
+      showDynamicToast(state.physics3D ? 'Spatial 3D enabled' : 'Perspective locked flat');
     }
 
-    function toggleInspectorDrawer() {
-      const panel = document.getElementById('inspector-panel');
-      const isClosed = panel.classList.contains('translate-x-full');
-      if (isClosed) {
-        panel.classList.remove('translate-x-full');
-      } else {
-        panel.classList.add('translate-x-full');
-      }
-    }
+    stageViewport.addEventListener('mousemove', (e) => {
+      if (!state.physics3D || state.isEditing) return;
 
-    function resetToSample() {
-      appState.code = SAMPLE_CODE;
-      inlineTextarea.value = SAMPLE_CODE;
-      renderCode();
-      showToast('Sample snippet reset');
-    }
+      const rect = stageViewport.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-    async function exportSnapshot() {
-      // Trigger camera flash effect
-      const flash = document.getElementById('flash-overlay');
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Subtle, tactile 3D tilt angles
+      const rotateX = ((y - centerY) / centerY) * -7;
+      const rotateY = ((x - centerX) / centerX) * 7;
+
+      cardRig.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+
+      // Specular glare positioning
+      cardGlare.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+      cardGlare.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+      cardGlare.style.setProperty('--glare-opacity', '0.6');
+    });
+
+    stageViewport.addEventListener('mouseleave', () => {
+      if (!state.physics3D) return;
+      cardRig.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+      cardGlare.style.setProperty('--glare-opacity', '0');
+    });
+
+    async function renderSnapshot() {
+      // Shutter flash animation
+      const flash = document.getElementById('shutter-flash');
       flash.style.opacity = '0.9';
-      setTimeout(() => { flash.style.opacity = '0'; }, 160);
+      setTimeout(() => { flash.style.opacity = '0'; }, 180);
 
-      // Make sure direct editor is hidden for capture
-      if (appState.isEditingDirectly) {
-        toggleDirectEditMode();
-      }
+      // Reset 3D tilt before snapshot to prevent warped text
+      const previousTransform = cardRig.style.transform;
+      cardRig.style.transform = 'none';
 
-      showToast('Generating snapshot...');
+      if (state.isEditing) toggleCodeEditModal();
+      showDynamicToast('Rendering Retina snapshot...');
 
       try {
         const canvas = await html2canvas(exportTarget, {
           backgroundColor: null,
-          scale: 3, // Ultra crisp Retina resolution
+          scale: 3, // Crisp 3x Ultra-Retina
           useCORS: true,
           logging: false,
           allowTaint: true
         });
 
-        const safeFilename = (appState.filename || 'nimbus-snippet').replace(/\.[^/.]+$/, "");
+        const safeName = (state.filename || 'nimbus-snippet').replace(/\.[^/.]+$/, "");
         const link = document.createElement('a');
-        link.download = `${safeFilename}.png`;
+        link.download = `${safeName}.png`;
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
-        showToast('Image downloaded successfully');
+        showDynamicToast('High-res image downloaded');
       } catch (err) {
-        showToast('Failed to export snapshot');
+        showDynamicToast('Failed to export canvas');
+      } finally {
+        cardRig.style.transform = previousTransform;
       }
     }
 
-    async function copySnapshot() {
-      if (appState.isEditingDirectly) {
-        toggleDirectEditMode();
-      }
+    async function copyCardBitmap() {
+      const previousTransform = cardRig.style.transform;
+      cardRig.style.transform = 'none';
 
-      showToast('Rendering snapshot for clipboard...');
+      if (state.isEditing) toggleCodeEditModal();
+      showDynamicToast('Copying snippet...');
 
       try {
         const canvas = await html2canvas(exportTarget, {
@@ -814,53 +1005,53 @@ export class RateLimiter {
 
         canvas.toBlob(async (blob) => {
           if (!blob) {
-            showToast('Failed to create snippet image');
+            showDynamicToast('Could not encode image');
             return;
           }
           try {
-            const clipboardItem = new ClipboardItem({ 'image/png': blob });
-            await navigator.clipboard.write([clipboardItem]);
-            showToast('Snapshot copied to clipboard!');
+            const item = new ClipboardItem({ 'image/png': blob });
+            await navigator.clipboard.write([item]);
+            showDynamicToast('Snapshot copied to clipboard!');
           } catch (clipErr) {
-            // Fallback for sandboxed environments
             const link = document.createElement('a');
-            link.download = `${appState.filename || 'snippet'}.png`;
+            link.download = `${state.filename || 'snippet'}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
-            showToast('Clipboard restricted: image downloaded');
+            showDynamicToast('Clipboard fallback: downloaded PNG');
           }
         }, 'image/png');
       } catch (err) {
-        showToast('Unable to copy image');
+        showDynamicToast('Copy operation failed');
+      } finally {
+        cardRig.style.transform = previousTransform;
       }
     }
 
-    function showToast(message) {
-      const banner = document.getElementById('toast-banner');
-      const text = document.getElementById('toast-message');
-      text.textContent = message;
-
-      banner.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
-      banner.classList.add('opacity-100', 'translate-y-0');
+    function showDynamicToast(msg) {
+      const toast = document.getElementById('dynamic-toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.remove('opacity-0', '-translate-y-3', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
 
       setTimeout(() => {
-        banner.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
-        banner.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
       }, 2600);
     }
 
-    // Application Initialization
+    // App Initialize
     window.addEventListener('DOMContentLoaded', () => {
-      renderBackdropSwatches();
-      selectBackdrop('aurora-violet');
-      setOption('padding', appState.padding);
-      setOption('fontSize', appState.fontSize);
-      setOption('radius', appState.radius);
-      setOption('opacity', appState.opacity);
-      langSelect.value = appState.language;
-      filenameInput.value = appState.filename;
-      inlineTextarea.value = appState.code;
-      renderCode();
+      renderMaterialSwatches();
+      selectMaterial('acrylic-aurora');
+      renderThemeOptions();
+      updateParam('padding', state.padding);
+      updateParam('fontSize', state.fontSize);
+      updateParam('radius', state.radius);
+      updateParam('opacity', state.opacity);
+      document.getElementById('language-select').value = state.lang;
+      inlineFilename.value = state.filename;
+      rawCodeEditor.value = state.code;
+      renderHighlightedCode();
     });
   </script>
 </body>
